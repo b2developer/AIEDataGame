@@ -18,7 +18,6 @@ const int MAX_MESSAGE = 400;
 */
 class Log
 {
-
 public:
 
 	char logPath[MAX_PATH];

@@ -335,7 +335,7 @@ public:
 
 private:
 
-	//allow tree node and key list to access the private variables
+	//allow tree node to access the private variables
 	friend TreeNode<T>;
 
 	TreeNode<T>* m_root = nullptr;

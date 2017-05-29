@@ -156,7 +156,7 @@ public:
 	void insert(char key[MAX_KEY], T value) 
 	{
 		//the tree doesn't have a root, place the item here
-		if (m_tree.getRoot() == nullptr)
+		if (m_tree.getRoot() == nullptr || !m_tree.getRoot()->value.active)
 		{
 			//create the new root node
 			TreeNode<KeyNode<T>>* newRoot = new TreeNode<KeyNode<T>>();
@@ -278,6 +278,13 @@ public:
 	{
 		//remember the current node and the node previously transversed to
 		TreeNode<KeyNode<T>>* currentNode = m_tree.getRoot();
+		TreeNode<KeyNode<T>>* prevNode = m_tree.getRoot();
+
+		//test if there is nothing in the container
+		if (currentNode == nullptr)
+		{
+			return nullptr;
+		}
 
 		//transverse down the tree until a leaf is reached
 		while (currentNode->value.checkAlpha(key) != 0 && currentNode->value.active)
@@ -293,12 +300,14 @@ public:
 			{
 				currentNode = currentNode->children[0]; //continue down the left branch
 			}
+
+			prevNode = currentNode;
 		}
 
 		//an active node terminated the loop, meaning that it is the node that was searched for
-		if (currentNode->value.active)
+		if (prevNode->value.active)
 		{
-			return &currentNode->value.value;
+			return &prevNode->value.value;
 		}
 		else
 		{
