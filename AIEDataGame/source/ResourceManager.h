@@ -23,13 +23,14 @@ enum class ResourceType
 */
 struct ResourceReference
 {
-	/*
-	* ~ResourceReference()
-	* destructor, deletes the resource
-	*/
-	~ResourceReference()
+	ResourceReference operator=(const ResourceReference other)
 	{
-		//resource->releaseResource();
+		delete resource;
+
+		resource = other.resource;
+		resourceCount = other.resourceCount;
+
+		return *this;
 	}
 
 	Resource* resource = nullptr;

@@ -225,34 +225,6 @@ public:
 
 			return *this;
 		}
-		
-
-		///*
-		//* operator*
-		//* template
-		//*
-		//* returns the value held by the iterator's node
-		//*
-		//* @returns T& - reference to the value
-		//*/
-		//T& operator *() 
-		//{
-		//	return m_node->value;
-		//}
-		//
-		///*
-		//* operator->
-		//* template
-		//*
-		//* returns a pointer to the value held by the iterator's node
-		//*
-		//* @returns T* - pointer to the value
-		//*/
-		//T* operator ->()
-		//{
-		//	return &m_node->value;
-		//}
-		
 
 		/*
 		* operator==
@@ -474,6 +446,9 @@ public:
 			delete nodePtr;
 			nodePtr = nextPtr;
 		}
+
+		m_first = nullptr;
+		m_last = nullptr;
 
 		size = 0;
 	}

@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "LinkedList.h"
 
 //used to allow the player to specify the search method for the transversal of trees
@@ -28,8 +30,13 @@ public:
 	* template
 	* default constructor
 	*/
-
-	TreeNode<T>() {}
+	TreeNode<T>() {
+		std::cout << "Tree Node created without parameters\n\n";
+	};
+	TreeNode<T>(unsigned int _line, char* _filename) { line = _line; filename = _filename; 
+		std::cout << "Tree Node created on " << line << " in " << std::string(filename);
+		std::cout << "\n\n";
+	}
 
 	/*
 	* ~TreeNode<T>()
@@ -38,16 +45,19 @@ public:
 	*/
 	~TreeNode<T>()
 	{
+		std::cout << "Tree Node deleted on " << line << " in " << std::string(filename);
+		std::cout << "\n\n";
+
 		LinkedList<TreeNode<T>*>::Iterator childIter = children.begin();
 
 		//iterate through all children, remembering the pointer and then deleting it
-		while (childIter != children.begin())
+		while (childIter != children.end())
 		{
 			TreeNode<T>* childNode = childIter.m_node->value;
 
-			childIter++;
-
 			delete childNode;
+
+			childIter++;
 		}
 	};
 
@@ -72,7 +82,9 @@ public:
 	}
 
 	T value;
-
+	
+	char* filename = ""; //this too >>>
+	unsigned int line = 0; //DELETE THIS asdfhapsoifasdfhkajsdhfkashdflkasdhflkjhadsflksahdlkjhsadfklhasdklfhaslkjdfhkasdjfhklasdjhfklasjdasdadasdasdasdasdasdasdassd
 	TreeNode<T>* parent = nullptr; //the node that this node is parented to
 	LinkedList<TreeNode<T>*> children = LinkedList<TreeNode<T>*>(0); //the nodes parented to this node
 };

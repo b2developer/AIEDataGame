@@ -159,7 +159,7 @@ public:
 		if (m_tree.getRoot() == nullptr || !m_tree.getRoot()->value.active)
 		{
 			//create the new root node
-			TreeNode<KeyNode<T>>* newRoot = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* newRoot = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
 
 			//copy the key and the value
 			strcpy_s(newRoot->value.key, key);
@@ -169,8 +169,8 @@ public:
 			m_tree.setRoot(newRoot);
 
 			//create two in-active children nodes for use later
-			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
-			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
+			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
 
 			inActiveNodeLeft->value.active = false;
 			inActiveNodeRight->value.active = false;
@@ -208,8 +208,8 @@ public:
 			currentNode->value.value = value;
 
 			//create two in-active children nodes for use later
-			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
-			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
+			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
 
 			inActiveNodeLeft->value.active = false;
 			inActiveNodeRight->value.active = false;
@@ -234,9 +234,17 @@ public:
 	{
 		TreeNode<KeyNode<T>>* toDelete = searchForNode(key);
 
+		if (toDelete == nullptr)
+		{
+			return;
+		}
+
 		//get the two children
 		TreeNode<KeyNode<T>>* leftChild = toDelete->children[0];
 		TreeNode<KeyNode<T>>* rightChild = toDelete->children[1];
+
+		//get the parent
+		TreeNode<KeyNode<T>>* parent = toDelete->parent;
 
 		//erase the children's connections to the parent
 		leftChild->parent = nullptr;
@@ -300,14 +308,12 @@ public:
 			{
 				currentNode = currentNode->children[0]; //continue down the left branch
 			}
-
-			prevNode = currentNode;
 		}
 
 		//an active node terminated the loop, meaning that it is the node that was searched for
-		if (prevNode->value.active)
+		if (currentNode->value.active)
 		{
-			return &prevNode->value.value;
+			return &currentNode->value.value;
 		}
 		else
 		{
@@ -316,7 +322,7 @@ public:
 	}
 
 private:
-
+public:
 	LinkedTree<KeyNode<T>> m_tree = LinkedTree<KeyNode<T>>(); //binary search tree of key nodes
 
 	/*
@@ -382,10 +388,13 @@ private:
 		{
 			//remember the current node and the node previously transversed to
 			TreeNode<KeyNode<T>>* currentNode = m_tree.getRoot();
+			TreeNode<KeyNode<T>>* prevNode = m_tree.getRoot();
 
 			//transverse down the tree until a leaf is reached
 			while (currentNode->value.active)
 			{
+				prevNode = currentNode;
+
 				int order = currentNode->value.checkAlpha(node->value.key);
 
 				//check if the key comes before or after the current node's key alphabetically
@@ -401,6 +410,8 @@ private:
 
 			//set the leaf to the given node
 			*currentNode = *node;
+
+			currentNode->parent = prevNode;
 		}
 
 	}

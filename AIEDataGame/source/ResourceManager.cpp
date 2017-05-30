@@ -98,6 +98,7 @@ void ResourceManager::releaseResource(char fileName[MAX_PATH])
 
 			loadedContainer.remove(fileName);
 		}
+
 	}
 
 }

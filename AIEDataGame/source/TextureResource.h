@@ -29,6 +29,16 @@ public:
 	* default destructor
 	*/
 	~TextureResource() {};
+	
+	/*
+	* operator=
+	*
+	* assignment overload
+	*
+	* @param const TextureResource other - the other object to copy from
+	* @returns TextureResource - the new object with copied data
+	*/
+	TextureResource operator=(const TextureResource other);
 
 	/*
 	* loadResource

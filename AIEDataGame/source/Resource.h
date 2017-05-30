@@ -21,9 +21,10 @@ public:
 
 	/*
 	* ~Resource
+	* virtual function
 	* default destructor
 	*/
-	~Resource() {};
+	virtual ~Resource() {};
 
 	/*
 	* loadResource
