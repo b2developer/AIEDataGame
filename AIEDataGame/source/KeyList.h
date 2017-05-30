@@ -322,7 +322,6 @@ public:
 	}
 
 private:
-public:
 	LinkedTree<KeyNode<T>> m_tree = LinkedTree<KeyNode<T>>(); //binary search tree of key nodes
 
 	/*
@@ -388,7 +387,7 @@ public:
 		{
 			//remember the current node and the node previously transversed to
 			TreeNode<KeyNode<T>>* currentNode = m_tree.getRoot();
-			TreeNode<KeyNode<T>>* prevNode = m_tree.getRoot();
+			TreeNode<KeyNode<T>>* prevNode = nullptr;
 
 			//transverse down the tree until a leaf is reached
 			while (currentNode->value.active)
@@ -408,10 +407,16 @@ public:
 				}
 			}
 
-			//set the leaf to the given node
-			*currentNode = *node;
+			delete currentNode;
 
+			currentNode = new TreeNode<KeyNode<T>>();
+
+			currentNode->value = node->value;
 			currentNode->parent = prevNode;
+			currentNode->children = node->children;
+			
+			delete node;
+
 		}
 
 	}

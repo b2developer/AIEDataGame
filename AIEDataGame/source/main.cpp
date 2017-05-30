@@ -31,8 +31,6 @@ int main()
 		std::cout << "\n\n\n\n\n\n";
 	}
 
-	
-
 	_CrtDumpMemoryLeaks();
 
 	LOG->initialise();
