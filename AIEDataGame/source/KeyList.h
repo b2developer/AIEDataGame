@@ -159,18 +159,21 @@ public:
 		if (m_tree.getRoot() == nullptr || !m_tree.getRoot()->value.active)
 		{
 			//create the new root node
-			TreeNode<KeyNode<T>>* newRoot = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
+			TreeNode<KeyNode<T>>* newRoot = new TreeNode<KeyNode<T>>();
 
 			//copy the key and the value
 			strcpy_s(newRoot->value.key, key);
 			newRoot->value.value = value;
 
+			//delete the previous root
+			delete m_tree.getRoot();
+
 			//give the tree the new root
 			m_tree.setRoot(newRoot);
 
 			//create two in-active children nodes for use later
-			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
-			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
+			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
 
 			inActiveNodeLeft->value.active = false;
 			inActiveNodeRight->value.active = false;
@@ -208,8 +211,8 @@ public:
 			currentNode->value.value = value;
 
 			//create two in-active children nodes for use later
-			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
-			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>(__LINE__, __FILE__);
+			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
 
 			inActiveNodeLeft->value.active = false;
 			inActiveNodeRight->value.active = false;
@@ -234,6 +237,7 @@ public:
 	{
 		TreeNode<KeyNode<T>>* toDelete = searchForNode(key);
 
+		//exit early if the node couldn't be found
 		if (toDelete == nullptr)
 		{
 			return;
@@ -246,15 +250,52 @@ public:
 		//get the parent
 		TreeNode<KeyNode<T>>* parent = toDelete->parent;
 
-		//erase the children's connections to the parent
+		//remove the link of the two children from the node to be removed
 		leftChild->parent = nullptr;
 		rightChild->parent = nullptr;
 
-		//erase connections to children
+		//remove the link to the two children from the node to be removed
 		toDelete->children.clear();
 
-		//setting the node to in-active allows the KeyList to overwrite the node without deleting it
-		toDelete->value.active = false;
+		//create a new node that is in-active
+		TreeNode<KeyNode<T>>* newNode = new TreeNode<KeyNode<T>>();
+		newNode->value.active = false;
+		newNode->parent = parent;
+		newNode->children = toDelete->children;
+
+			
+		if (parent != nullptr) //the node isn't the root
+		{
+			//get the correct index (indicates if the node to be removed is the left or right child)
+			int index = 0;
+
+			if (parent->children[1] == toDelete)
+			{
+				index = 1;
+			}
+
+			//remove the node
+			m_tree.prune(toDelete);
+
+			//link the new node back into the parent as a child
+			if (index == 0)
+			{
+				parent->children.pushFront(newNode);
+			}
+			else
+			{
+				parent->children.pushBack(newNode);
+			}
+		}
+		else //the node is the root
+		{
+			//remove the root
+			delete m_tree.getRoot();
+
+			//set the new root
+			m_tree.setRoot(newNode);
+		}
+		
 
 		if (leftChild->value.active && rightChild->value.active) //both nodes are active
 		{
@@ -264,10 +305,17 @@ public:
 		else if (leftChild->value.active && !rightChild->value.active) //only the left node is active
 		{
 			insertNode(leftChild);
+			delete rightChild;
 		}
 		else if (!leftChild->value.active && rightChild->value.active) //only the right node is active
 		{
 			insertNode(rightChild);
+			delete leftChild;
+		}
+		else //both nodes are inactive
+		{
+			delete leftChild;
+			delete rightChild;
 		}
 
 	}
@@ -378,10 +426,20 @@ private:
 	void insertNode(TreeNode<KeyNode<T>>* node)
 	{
 		//the tree doesn't have a root, place the item here
+
 		if (m_tree.getRoot() == nullptr)
 		{
 			//give the tree the new root
 			m_tree.setRoot(node);
+
+			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
+
+			inActiveNodeLeft->value.active = false;
+			inActiveNodeRight->value.active = false;
+
+			m_tree.extend(node, inActiveNodeLeft);
+			m_tree.extend(node, inActiveNodeRight);
 		}
 		else
 		{
@@ -407,15 +465,19 @@ private:
 				}
 			}
 
-			delete currentNode;
-
-			currentNode = new TreeNode<KeyNode<T>>();
-
 			currentNode->value = node->value;
 			currentNode->parent = prevNode;
-			currentNode->children = node->children;
 			
 			delete node;
+
+			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
+			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
+
+			inActiveNodeLeft->value.active = false;
+			inActiveNodeRight->value.active = false;
+
+			m_tree.extend(currentNode, inActiveNodeLeft);
+			m_tree.extend(currentNode, inActiveNodeRight);
 
 		}
 

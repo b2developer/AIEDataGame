@@ -69,6 +69,9 @@
     <ClCompile Include="source\TextureResource.cpp">
       <Filter>Source Files\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="source\SoundResource.cpp">
+      <Filter>Source Files\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\MathLibrary.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files\Resource</Filter>
     </ClInclude>
     <ClInclude Include="source\TextureResource.h">
+      <Filter>Header Files\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SoundResource.h">
       <Filter>Header Files\Resource</Filter>
     </ClInclude>
   </ItemGroup>

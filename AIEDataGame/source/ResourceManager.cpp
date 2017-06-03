@@ -42,18 +42,18 @@ void ResourceManager::initialise()
 //loads the resource if it hasn't been loaded already
 Resource * ResourceManager::requestResource(ResourceType resourceType, char fileName[MAX_PATH])
 {
-	ResourceReference * resourcePtr = loadedContainer.searchFor(fileName);
+	ResourceReference ** resourcePtr = loadedContainer.searchFor(fileName);
 
 	//check if the resource has been loaded yet
 	if (resourcePtr == nullptr)
 	{
-		resourcePtr = new ResourceReference();
+		ResourceReference* resourceRef = new ResourceReference();
 
 		//load the correct resource type
 		switch (resourceType)
 		{
-		case ResourceType::TEXTURE: resourcePtr->resource = new TextureResource(); break;
-		case ResourceType::AUDIO: ; break;
+		case ResourceType::TEXTURE: resourceRef->resource = new TextureResource(); break;
+		case ResourceType::AUDIO: resourceRef->resource = new SoundResource(); break;
 		case ResourceType::TEXT: ; break;
 		}
 
@@ -63,24 +63,24 @@ Resource * ResourceManager::requestResource(ResourceType resourceType, char file
 		strcat_s(resourcePathCopy, fileName); //add the filename requested to the path
 
 		//tell the resource to load itself
-		resourcePtr->resource->loadResource(resourcePathCopy);
+		resourceRef->resource->loadResource(resourcePathCopy);
 
 		//place it in the list
-		loadedContainer.insert(fileName, *resourcePtr);
+		loadedContainer.insert(fileName, resourceRef);
 
 		//since the resource gets copied into the list, get the true item again
 		resourcePtr = loadedContainer.searchFor(fileName);
 	}
 
-	resourcePtr->resourceCount++;
+	(*resourcePtr)->resourceCount++;
 	
-	return resourcePtr->resource;
+	return (*resourcePtr)->resource;
 }
 
 //frees the resource if there are no longer any users of it
 void ResourceManager::releaseResource(char fileName[MAX_PATH])
 {
-	ResourceReference * resourcePtr = loadedContainer.searchFor(fileName);
+	ResourceReference * resourcePtr = *loadedContainer.searchFor(fileName);
 
 	//check if the resource has been loaded yet
 	if (resourcePtr == nullptr)
@@ -94,11 +94,10 @@ void ResourceManager::releaseResource(char fileName[MAX_PATH])
 		//release the resource if the resource count falls to 0
 		if (resourcePtr->resourceCount == 0)
 		{
-			resourcePtr->resource->releaseResource();
-
+			delete resourcePtr;
 			loadedContainer.remove(fileName);
 		}
-
+		
 	}
 
 }

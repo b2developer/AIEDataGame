@@ -10,9 +10,11 @@ Application2D::~Application2D()
 
 }
 
+
 //reserves memory to be used by the application
 bool Application2D::startup()
 {
+
 	m_renderer2D = new aie::Renderer2D();
 
 	TextureResource* redSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");

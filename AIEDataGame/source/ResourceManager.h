@@ -2,6 +2,7 @@
 #include "KeyList.h"
 #include "Resource.h"
 #include "TextureResource.h"
+#include "SoundResource.h"
 
 #define RESOURCE_MAN ResourceManager::getInstance()
 
@@ -14,23 +15,32 @@ enum class ResourceType
 };
 
 /*
-* struct ResourceReference
+* class ResourceReference
 *
 * couples a resource with a count of the amount
 * of uses the resource currently has
 *
 * author: Bradley Booth, Academy of Interactive Entertainment, 2017
 */
-struct ResourceReference
+class ResourceReference
 {
-	ResourceReference operator=(const ResourceReference other)
+public:
+
+	/*
+	* ResourceReference
+	* default constructor
+	*/
+	ResourceReference() {}
+
+	/*
+	* ~ResourceReference()
+	* destructor, releases the aquired data for the resource and then
+	* frees the resource object itself
+	*/
+	~ResourceReference()
 	{
+		resource->releaseResource();
 		delete resource;
-
-		resource = other.resource;
-		resourceCount = other.resourceCount;
-
-		return *this;
 	}
 
 	Resource* resource = nullptr;
@@ -52,7 +62,7 @@ public:
 
 	char resourcePath[MAX_PATH]; //path to the resource folder
 
-	KeyList<ResourceReference> loadedContainer; //contains resource objects
+	KeyList<ResourceReference*> loadedContainer; //contains resource objects
 
 	/*
 	* getInstance

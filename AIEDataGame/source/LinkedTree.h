@@ -30,13 +30,7 @@ public:
 	* template
 	* default constructor
 	*/
-	TreeNode<T>() {
-		std::cout << "Tree Node created without parameters\n\n";
-	};
-	TreeNode<T>(unsigned int _line, char* _filename) { line = _line; filename = _filename; 
-		std::cout << "Tree Node created on " << line << " in " << std::string(filename);
-		std::cout << "\n\n";
-	}
+	TreeNode<T>() {}
 
 	/*
 	* ~TreeNode<T>()
@@ -45,9 +39,6 @@ public:
 	*/
 	~TreeNode<T>()
 	{
-		std::cout << "Tree Node deleted on " << line << " in " << std::string(filename);
-		std::cout << "\n\n";
-
 		LinkedList<TreeNode<T>*>::Iterator childIter = children.begin();
 
 		//iterate through all children, remembering the pointer and then deleting it
@@ -82,9 +73,7 @@ public:
 	}
 
 	T value;
-	
-	char* filename = ""; //this too >>>
-	unsigned int line = 0; //DELETE THIS asdfhapsoifasdfhkajsdhfkashdflkasdhflkjhadsflksahdlkjhsadfklhasdklfhaslkjdfhkasdjfhklasdjhfklasjdasdadasdasdasdasdasdasdassd
+
 	TreeNode<T>* parent = nullptr; //the node that this node is parented to
 	LinkedList<TreeNode<T>*> children = LinkedList<TreeNode<T>*>(0); //the nodes parented to this node
 };
@@ -323,27 +312,29 @@ public:
 	*/
 	LinkedList<T*> getList(SearchMethod searchMethod)
 	{
-		LinkedList<TreeNode<T>*>* nodeList = &(LinkedList<TreeNode<T>*>(0));
+		LinkedList<TreeNode<T>*> nodeList = LinkedList<TreeNode<T>*>(0);
 
 		//get a list of the desired tree nodes in order
 		switch (searchMethod)
 		{
-		case SearchMethod::DEPTH_PRE_ORDER: getDepthPreList(m_root, nodeList); break;
-		case SearchMethod::DEPTH_POST_ORDER: getDepthPostList(m_root, nodeList); break;
-		case SearchMethod::BREADTH_ORDER: getBreadthList(nodeList); break;
+		case SearchMethod::DEPTH_PRE_ORDER: getDepthPreList(m_root, &nodeList); break;
+		case SearchMethod::DEPTH_POST_ORDER: getDepthPostList(m_root, &nodeList); break;
+		case SearchMethod::BREADTH_ORDER: getBreadthList(&nodeList); break;
 		}
 
 		LinkedList<T*> refList = LinkedList<T*>(0); //list to store pointers to the data
-		LinkedList<TreeNode<T>*>::Iterator nodeIter = nodeList->begin(); //iterator for the tree node list
+		LinkedList<TreeNode<T>*>::Iterator nodeIter = nodeList.begin(); //iterator for the tree node list
 
 		//iterate through all of the tree nodes
-		for (;nodeIter != nodeList->end(); nodeIter++)
+		for (; nodeIter != nodeList.end(); nodeIter++)
 		{
 			refList.pushBack(&nodeIter.m_node->value->value);
 		}
 
 		return refList;
 	}
+
+	
 
 private:
 
