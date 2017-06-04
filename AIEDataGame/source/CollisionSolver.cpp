@@ -19,18 +19,18 @@ CollisionSolver* CollisionSolver::getInstance()
 Collision CollisionSolver::testCollision(AABB aabb, Vector2 point)
 {
 	//is the point inside two ranges formed by the min and max points
-	if (aabb.max.x > point.x && aabb.min.x < point.x)
+	if (aabb.max_.x > point.x && aabb.min_.x < point.x)
 	{
-		if (aabb.max.y > point.y && aabb.min.y < point.y)
+		if (aabb.max_.y > point.y && aabb.min_.y < point.y)
 		{
 			Vector2 seperation = Vector2();
 
 			//get the movement required to bring to point to the four edges of the AABB
-			float leftSep = aabb.min.x - point.x;
-			float rightSep = aabb.max.x - point.x;
+			float leftSep = aabb.min_.x - point.x;
+			float rightSep = aabb.max_.x - point.x;
 
-			float upSep = aabb.max.y - point.y;
-			float downSep = aabb.min.y - point.y;
+			float upSep = aabb.max_.y - point.y;
+			float downSep = aabb.min_.y - point.y;
 
 			//which x direction has the smallest seperation
 			if (ABS(leftSep) < ABS(rightSep))
@@ -69,10 +69,10 @@ Collision CollisionSolver::testCollision(Vector2 point, AABB aabb)
 Collision CollisionSolver::testCollision(AABB aabb1, AABB aabb2)
 {
 	//test if the ranges formed by the min and max points of both aabbs overlap
-	float leftSep = aabb1.max.x - aabb2.min.x;
-	float rightSep = aabb1.min.x - aabb2.max.x;
-	float upSep = aabb1.max.y - aabb2.min.y;
-	float downSep = aabb1.min.y - aabb2.max.y;
+	float leftSep = aabb1.max_.x - aabb2.min_.x;
+	float rightSep = aabb1.min_.x - aabb2.max_.x;
+	float upSep = aabb1.max_.y - aabb2.min_.y;
+	float downSep = aabb1.min_.y - aabb2.max_.y;
 
 
 	if (leftSep > 0 && rightSep < 0)

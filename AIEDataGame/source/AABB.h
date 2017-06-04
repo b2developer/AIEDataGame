@@ -12,8 +12,8 @@ class AABB
 {
 public:
 
-	Vector2 min = Vector2(); //bottom left corner
-	Vector2 max = Vector2(); //top right corner
+	Vector2 min_ = Vector2(); //bottom left corner
+	Vector2 max_ = Vector2(); //top right corner
 
 	/*
 	* AABB()
@@ -28,7 +28,7 @@ public:
 	* @param _min - the bottom left corner
 	* @param _max - the top right corner
 	*/
-	AABB(Vector2 _min, Vector2 _max) : min(_min), max(_max) {};
+	AABB(Vector2 _min, Vector2 _max) : min_(_min), max_(_max) {};
 
 	/*
 	* ~AABB()
@@ -47,8 +47,8 @@ public:
 	void move(Vector2 movement)
 	{
 		//apply the offset to the corners
-		min += movement;
-		max += movement;
+		min_ += movement;
+		max_ += movement;
 	}
 	
 };

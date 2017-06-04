@@ -27,6 +27,20 @@ bool Application2D::startup()
 	RESOURCE_MAN->releaseResource("green_square.png");
 	RESOURCE_MAN->releaseResource("red_square.png");
 
+	MenuState* mainMenu = new MenuState();
+
+	//main menu items
+	{
+		Button* button1 = new Button();
+		button1->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+		button1->hitbox.min_ = Vector2(200, 200);
+		button1->hitbox.max_ = Vector2(600, 600);
+
+		mainMenu->items.pushFront(button1);
+	}
+
+	gameStateStack.pushBack(mainMenu);
+
 	return true;
 }
 
@@ -65,15 +79,23 @@ void Application2D::update(float deltaTime)
 	else
 	{
 		//there are no gamestates left, quit the application
-		//quit();
+		quit();
 	}
+
+	PREV_MOUSE_0_STATE = input->isMouseButtonDown(0);
+	PREV_MOUSE_1_STATE = input->isMouseButtonDown(1);
+
 }
 
 //renders the game
 void Application2D::draw()
 {
+	clearScreen();
+
 	m_renderer2D->setCameraPos(m_camera.x, m_camera.y);
 	m_renderer2D->begin();
+
+	m_renderer2D->setRenderColour(1,0,1);
 
 	//check that there is still gamestates left in the stack
 	if (gameStateStack.size > 0)

@@ -12,6 +12,9 @@
 #include "GameState.h"
 #include "MenuState.h"
 
+#include "Item.h"
+#include "Button.h"
+
 /*
 * class Application2D
 * child class of aie::Application
@@ -79,11 +82,15 @@ public:
 	*/
 	void draw();
 
-private:
-
-	Vector2 m_camera = Vector2(0,0); //position of the renderer
 	aie::Renderer2D* m_renderer2D; //draws everything
 
-	LinkedList<GameState*> gameStateStack; //gamestate list, manages the entire game
+	//previous state variables
+	bool PREV_MOUSE_0_STATE = false;
+	bool PREV_MOUSE_1_STATE = false;
+
+	Vector2 m_camera = Vector2(0, 0); //position of the renderer
+
+	LinkedList<GameState*> gameStateStack; //gamestate stack, contains game states layered on top of each other
+	LinkedList<GameState*> gameStateList; //global gamestate list, keeps all gamestates as static pointers
 
 };

@@ -1,9 +1,18 @@
 #pragma once
 #include "Item.h"
 #include "AABB.h"
+#include "TextureResource.h"
+
+//custom enum for button settings
+enum class INPUT_MODE
+{
+	EDGE, //only triggers once when the item is pressed
+	CONSTANT, //triggers as long as the item is pressed
+};
 
 /*
 * class Button
+* child class of Button
 *
 * performs an action when clicked
 *
@@ -13,7 +22,9 @@ class Button : public Item
 {
 public:
 
+	TextureResource* boxTexture = nullptr; //the texture of the button to be drawn
 	AABB hitbox = AABB(); //the hitbox of the button
+	INPUT_MODE inputMode = INPUT_MODE::EDGE; //the input mode of the button
 
 	/*
 	* Button()
