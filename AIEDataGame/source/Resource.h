@@ -33,7 +33,7 @@ public:
 	* called when the resource is required to 
 	* be loaded for use in the game
 	*
-	* @param char filePath[MAX_PATH] - c-string of the file path containing the resouce to load
+	* @param char filePath[MAX_PATH] - c-string of the file path containing the resource to load
 	* @returns void
 	*/
 	virtual void loadResource(char filePath[MAX_PATH]) = 0;

@@ -1,5 +1,6 @@
 #pragma once
 #include "Item.h"
+#include "Action.h"
 #include "AABB.h"
 #include "TextureResource.h"
 
@@ -12,7 +13,7 @@ enum class INPUT_MODE
 
 /*
 * class Button
-* child class of Button
+* child class of Item
 *
 * performs an action when clicked
 *
@@ -25,6 +26,7 @@ public:
 	TextureResource* boxTexture = nullptr; //the texture of the button to be drawn
 	AABB hitbox = AABB(); //the hitbox of the button
 	INPUT_MODE inputMode = INPUT_MODE::EDGE; //the input mode of the button
+	Action* action = nullptr; //action to execute when pressed
 
 	/*
 	* Button()

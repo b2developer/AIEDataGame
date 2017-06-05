@@ -2,7 +2,7 @@
 #include "KeyList.h"
 #include "Resource.h"
 #include "TextureResource.h"
-#include "SoundResource.h"
+#include "FontResource.h"
 
 #define RESOURCE_MAN ResourceManager::getInstance()
 
@@ -11,7 +11,8 @@ enum class ResourceType
 {
 	TEXTURE,
 	AUDIO,
-	TEXT
+	FONT,
+	TEXTFILE,
 };
 
 /*

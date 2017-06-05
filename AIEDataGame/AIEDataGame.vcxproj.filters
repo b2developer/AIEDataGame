@@ -69,10 +69,22 @@
     <ClCompile Include="source\TextureResource.cpp">
       <Filter>Source Files\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="source\SoundResource.cpp">
-      <Filter>Source Files\Resource</Filter>
+    <ClCompile Include="source\PopAction.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
     <ClCompile Include="source\PushAction.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FontResource.cpp">
+      <Filter>Source Files\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Text.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Timer.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FunctionAction.cpp">
       <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,13 +137,25 @@
     <ClInclude Include="source\TextureResource.h">
       <Filter>Header Files\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="source\SoundResource.h">
-      <Filter>Header Files\Resource</Filter>
+    <ClInclude Include="source\PopAction.h">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PushAction.h">
+      <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="source\Action.h">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
-    <ClInclude Include="source\PushAction.h">
+    <ClInclude Include="source\FontResource.h">
+      <Filter>Header Files\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Text.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Timer.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FunctionAction.h">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
   </ItemGroup>

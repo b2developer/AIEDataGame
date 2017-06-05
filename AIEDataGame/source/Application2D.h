@@ -14,6 +14,13 @@
 
 #include "Item.h"
 #include "Button.h"
+#include "Text.h"
+#include "Timer.h"
+
+#include "Action.h"
+#include "PushAction.h"
+#include "PopAction.h"
+#include "FunctionAction.h"
 
 /*
 * class Application2D
@@ -89,6 +96,7 @@ public:
 	bool PREV_MOUSE_1_STATE = false;
 
 	Vector2 m_camera = Vector2(0, 0); //position of the renderer
+	Vector2 m_screen = Vector2(0, 0); //dimensions of the screen
 
 	LinkedList<GameState*> gameStateStack; //gamestate stack, contains game states layered on top of each other
 	LinkedList<GameState*> gameStateList; //global gamestate list, keeps all gamestates as static pointers

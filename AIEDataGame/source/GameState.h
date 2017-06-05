@@ -15,6 +15,10 @@ class GameState
 {
 public:
 
+	bool firstFrame = false; //don't allow the gamestate to immediately take updates as soon as it's added
+	bool isFinalUpdate = true; //indicates if this state is the final state to update
+	bool isFinalDraw = true; //indicates if this state is the final state to draw
+
 	/*
 	* GameState
 	* default constructor

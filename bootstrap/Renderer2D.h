@@ -32,7 +32,7 @@ public:
 
 	// draws simple text on the screen horizontally
 	// depth is in the range [0,100] with lower being closer to the viewer
-	virtual void drawText(Font* font, const char* text, float xPos, float yPos, float depth = 0.0f);
+	virtual void drawText(Font* font, const char* text, float xPos, float yPos, float xScale = 1.0f, float yScale = 1.0f, float depth = 0.0f);
 
 	// sets the tint colour for all subsequent draw calls
 	void setRenderColour(float r, float g, float b, float a = 1.0f);

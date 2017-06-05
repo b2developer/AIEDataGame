@@ -27,19 +27,135 @@ bool Application2D::startup()
 	RESOURCE_MAN->releaseResource("green_square.png");
 	RESOURCE_MAN->releaseResource("red_square.png");
 
+	MenuState* splash = new MenuState();
 	MenuState* mainMenu = new MenuState();
+	MenuState* game = new MenuState();
+	MenuState* options = new MenuState();
+	MenuState* pause = new MenuState();
 
 	//main menu items
 	{
-		Button* button1 = new Button();
-		button1->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
-		button1->hitbox.min_ = Vector2(200, 200);
-		button1->hitbox.max_ = Vector2(600, 600);
+		//pop actions
+		PopAction* singlePopAct = new PopAction();
+		singlePopAct->layers = 1;
 
-		mainMenu->items.pushFront(button1);
+		PopAction* doublePopAct = new PopAction();
+		doublePopAct->layers = 2;
+
+		//push actions
+		PushAction* mmPushAct = new PushAction();
+		mmPushAct->pushed = mainMenu;
+
+		PushAction* gaPushAct = new PushAction();
+		gaPushAct->pushed = game;
+
+		PushAction* opPushAct = new PushAction();
+		opPushAct->pushed = options;
+
+		PushAction* paPushAct = new PushAction();
+		paPushAct->pushed = pause;
+
+		//push buttons
+		Button* gaPush = new Button();
+		gaPush->action = gaPushAct;
+		gaPush->hitbox.min_ = Vector2(0.4f, 0.4f);
+		gaPush->hitbox.max_ = Vector2(0.6f, 0.6f);
+		gaPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+
+		Button* opPush = new Button();
+		opPush->action = opPushAct;
+		opPush->hitbox.min_ = Vector2(0.4f, 0.4f);
+		opPush->hitbox.max_ = Vector2(0.6f, 0.6f);
+		opPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+
+		Button* opPush2 = new Button();
+		opPush2->action = opPushAct;
+		opPush2->hitbox.min_ = Vector2(0.7f, 0.4f);
+		opPush2->hitbox.max_ = Vector2(0.9f, 0.6f);
+		opPush2->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+
+		Button* paPush = new Button();
+		paPush->action = paPushAct;
+		paPush->hitbox.min_ = Vector2(0.4f, 0.4f);
+		paPush->hitbox.max_ = Vector2(0.6f, 0.6f);
+		paPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+
+		//pop buttons
+		Button* singlePop = new Button();
+		singlePop->action = singlePopAct;
+		singlePop->hitbox.min_ = Vector2(0.4f, 0.7f);
+		singlePop->hitbox.max_ = Vector2(0.6f, 0.9f);
+		singlePop->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
+
+		Button* doublePop = new Button();
+		doublePop->action = doublePopAct;
+		doublePop->hitbox.min_ = Vector2(0.7f, 0.7f);
+		doublePop->hitbox.max_ = Vector2(0.9f, 0.9f);
+		doublePop->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
+
+		//timer
+		Timer* splashTimer = new Timer();
+		splashTimer->maxTime = 3.0f;
+		splashTimer->currentTime = splashTimer->maxTime;
+		splashTimer->reactions.pushBack(singlePopAct);
+		splashTimer->reactions.pushBack(mmPushAct);
+
+		//text
+		Text* mainMenuText = new Text();
+		strcpy_s(mainMenuText->message, "Main Menu");
+		mainMenuText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
+		mainMenuText->origin = Vector2(0.05f, 0.8f);
+		mainMenuText->scale = Vector2(1.0f, 1.0f);
+
+		Text* gameText = new Text();
+		strcpy_s(gameText->message, "Game");
+		gameText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
+		gameText->origin = Vector2(0.05f, 0.8f);
+		gameText->scale = Vector2(1.0f, 1.0f);
+
+		Text* optionsText = new Text();
+		strcpy_s(optionsText->message, "Options");
+		optionsText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
+		optionsText->origin = Vector2(0.05f, 0.8f);
+		optionsText->scale = Vector2(1.0f, 1.0f);
+
+		Text* pauseText = new Text();
+		strcpy_s(pauseText->message, "Pause");
+		pauseText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
+		pauseText->origin = Vector2(0.05f, 0.6f);
+		pauseText->scale = Vector2(1.0f, 1.0f);
+
+		Text* splashText = new Text();
+		strcpy_s(splashText->message, "Splash");
+		splashText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
+		splashText->origin = Vector2(0.05f, 0.8f);
+		splashText->scale = Vector2(1.0f, 1.0f);
+
+
+		splash->items.pushBack(splashTimer);
+		splash->items.pushBack(splashText);
+
+		mainMenu->items.pushBack(gaPush);
+		mainMenu->items.pushBack(singlePop);
+		mainMenu->items.pushBack(mainMenuText);
+		mainMenu->items.pushBack(opPush2);
+
+		game->items.pushBack(paPush);
+		game->items.pushBack(singlePop);
+		game->items.pushBack(gameText);
+
+		pause->items.pushBack(singlePop);
+		pause->items.pushBack(doublePop);
+		pause->items.pushBack(opPush);
+		pause->items.pushBack(pauseText);
+
+		pause->isFinalDraw = false;
+
+		options->items.pushBack(singlePop);
+		options->items.pushBack(optionsText);
 	}
 
-	gameStateStack.pushBack(mainMenu);
+	gameStateStack.pushBack(splash);
 
 	return true;
 }
@@ -60,6 +176,9 @@ void Application2D::update(float deltaTime)
 		quit();
 	}
 
+	//get the screen dimensions
+	m_screen = Vector2((float)getWindowWidth(), (float)getWindowHeight());
+
 	TextureResource* redSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
 	TextureResource* blueSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
 	TextureResource* greenSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
@@ -73,8 +192,46 @@ void Application2D::update(float deltaTime)
 	//check that there is still gamestates left in the stack
 	if (gameStateStack.size > 0)
 	{
-		//update the uppermost gamestate
-		gameStateStack[0]->update(this, deltaTime);
+		for (unsigned int i = 0; i < gameStateStack.size; i++)
+		{
+			//check if the game state was just created
+			if (gameStateStack[i]->firstFrame)
+			{
+				//reset the firstFrame flag
+				gameStateStack[i]->firstFrame = false;
+			}
+			else
+			{
+				unsigned int prevSize = gameStateStack.size;
+
+				//update the gamestate
+				gameStateStack[i]->update(this, deltaTime);
+
+				if (gameStateStack.size > 0)
+				{
+					//update the new gamestate
+					if (gameStateStack.size > prevSize)
+					{
+						i++;
+					}
+					else if (gameStateStack.size < prevSize)
+					{
+						i--;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			//don't continue updating
+			if (gameStateStack[i]->isFinalUpdate)
+			{
+				break;
+			}
+		}
+
 	}
 	else
 	{
@@ -92,16 +249,25 @@ void Application2D::draw()
 {
 	clearScreen();
 
+	m_renderer2D->setRenderColour(1, 1, 1);
 	m_renderer2D->setCameraPos(m_camera.x, m_camera.y);
 	m_renderer2D->begin();
-
-	m_renderer2D->setRenderColour(1,0,1);
 
 	//check that there is still gamestates left in the stack
 	if (gameStateStack.size > 0)
 	{
-		//draw the uppermost gamestate
-		gameStateStack[0]->draw(this);
+		for (unsigned int i = 0; i < gameStateStack.size; i++)
+		{
+			//draw the gamestate
+			gameStateStack[i]->draw(this);
+
+			//don't continue rendering
+			if (gameStateStack[i]->isFinalDraw)
+			{
+				break;
+			}
+		}
+		
 	}
 
 	m_renderer2D->end();

@@ -53,8 +53,9 @@ Resource * ResourceManager::requestResource(ResourceType resourceType, char file
 		switch (resourceType)
 		{
 		case ResourceType::TEXTURE: resourceRef->resource = new TextureResource(); break;
-		case ResourceType::AUDIO: resourceRef->resource = new SoundResource(); break;
-		case ResourceType::TEXT: ; break;
+		case ResourceType::AUDIO: ; break;
+		case ResourceType::FONT: resourceRef->resource = new FontResource(); break;
+		case ResourceType::TEXTFILE: ; break;
 		}
 
 		char resourcePathCopy[MAX_PATH];

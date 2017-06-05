@@ -567,7 +567,7 @@ float Renderer2D::measureTextWidth(Font *font, const char *text)
 
 }
 
-void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos, float depth) {
+void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos, float xScale, float yScale, float depth) {
 
 	if (font == nullptr ||
 		font->m_glHandle == 0)
@@ -587,7 +587,8 @@ void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos,
 	int w = 0, h = 0;
 	glfwGetWindowSize(glfwGetCurrentContext(), &w, &h);
 
-	yPos = h - yPos;
+	float xPosZero = 0;
+	float yPosZero = (float)h;
 
 	while (*text != 0) {
 
@@ -600,12 +601,17 @@ void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos,
 			m_fontTexture[m_currentTexture - 1] = 1;
 		}
 
-		stbtt_GetBakedQuad((stbtt_bakedchar*)font->m_glyphData, font->m_textureWidth, font->m_textureHeight, (unsigned char)*text, &xPos, &yPos, &Q, 1);
+		stbtt_GetBakedQuad((stbtt_bakedchar*)font->m_glyphData, font->m_textureWidth, font->m_textureHeight, (unsigned char)*text, &xPosZero, &yPosZero, &Q, 1);
 
 		int index = m_currentVertex;
 
-		m_vertices[m_currentVertex].pos[0] = Q.x0;
-		m_vertices[m_currentVertex].pos[1] = h - Q.y1;
+		if (yScale > 1.1f)
+		{
+			int a = 0;
+		}
+
+		m_vertices[m_currentVertex].pos[0] = Q.x0 * xScale + xPos;
+		m_vertices[m_currentVertex].pos[1] = (h - Q.y0 - (Q.y1 - Q.y0)) + yPos;
 		m_vertices[m_currentVertex].pos[2] = depth;
 		m_vertices[m_currentVertex].pos[3] = (float)m_currentTexture - 1;
 		m_vertices[m_currentVertex].color[0] = m_r;
@@ -615,8 +621,8 @@ void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos,
 		m_vertices[m_currentVertex].texcoord[0] = Q.s0;
 		m_vertices[m_currentVertex].texcoord[1] = Q.t1;
 		m_currentVertex++;
-		m_vertices[m_currentVertex].pos[0] = Q.x1;
-		m_vertices[m_currentVertex].pos[1] = h - Q.y1;
+		m_vertices[m_currentVertex].pos[0] = Q.x1 * xScale + xPos;
+		m_vertices[m_currentVertex].pos[1] = (h - Q.y0 - (Q.y1 - Q.y0)) + yPos;
 		m_vertices[m_currentVertex].pos[2] = depth;
 		m_vertices[m_currentVertex].pos[3] = (float)m_currentTexture - 1;
 		m_vertices[m_currentVertex].color[0] = m_r;
@@ -626,8 +632,8 @@ void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos,
 		m_vertices[m_currentVertex].texcoord[0] = Q.s1;
 		m_vertices[m_currentVertex].texcoord[1] = Q.t1;
 		m_currentVertex++;
-		m_vertices[m_currentVertex].pos[0] = Q.x1;
-		m_vertices[m_currentVertex].pos[1] = h - Q.y0;
+		m_vertices[m_currentVertex].pos[0] = Q.x1 * xScale + xPos;
+		m_vertices[m_currentVertex].pos[1] = h - Q.y1 + (Q.y1 - Q.y0) * yScale + yPos;
 		m_vertices[m_currentVertex].pos[2] = depth;
 		m_vertices[m_currentVertex].pos[3] = (float)m_currentTexture - 1;
 		m_vertices[m_currentVertex].color[0] = m_r;
@@ -637,8 +643,8 @@ void Renderer2D::drawText(Font * font, const char* text, float xPos, float yPos,
 		m_vertices[m_currentVertex].texcoord[0] = Q.s1;
 		m_vertices[m_currentVertex].texcoord[1] = Q.t0;
 		m_currentVertex++;
-		m_vertices[m_currentVertex].pos[0] = Q.x0;
-		m_vertices[m_currentVertex].pos[1] = h - Q.y0;
+		m_vertices[m_currentVertex].pos[0] = Q.x0 * xScale + xPos;
+		m_vertices[m_currentVertex].pos[1] = h - Q.y1 + (Q.y1 - Q.y0) * yScale + yPos;
 		m_vertices[m_currentVertex].pos[2] = depth;
 		m_vertices[m_currentVertex].pos[3] = (float)m_currentTexture - 1;
 		m_vertices[m_currentVertex].color[0] = m_r;
