@@ -151,11 +151,14 @@
     <ClCompile Include="source\Log.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\MenuState.cpp" />
+    <ClCompile Include="source\PlayState.cpp" />
     <ClCompile Include="source\PopAction.cpp" />
     <ClCompile Include="source\PushAction.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
+    <ClCompile Include="source\Sprite.cpp" />
     <ClCompile Include="source\Text.cpp" />
     <ClCompile Include="source\TextureResource.cpp" />
+    <ClCompile Include="source\TickBox.cpp" />
     <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\UnitTest.cpp" />
   </ItemGroup>
@@ -175,12 +178,15 @@
     <ClInclude Include="source\Log.h" />
     <ClInclude Include="source\MathLibrary.h" />
     <ClInclude Include="source\MenuState.h" />
+    <ClInclude Include="source\PlayState.h" />
     <ClInclude Include="source\PopAction.h" />
     <ClInclude Include="source\PushAction.h" />
     <ClInclude Include="source\Resource.h" />
     <ClInclude Include="source\ResourceManager.h" />
+    <ClInclude Include="source\Sprite.h" />
     <ClInclude Include="source\Text.h" />
     <ClInclude Include="source\TextureResource.h" />
+    <ClInclude Include="source\TickBox.h" />
     <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\UnitTest.h" />
   </ItemGroup>

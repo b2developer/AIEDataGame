@@ -29,7 +29,7 @@ bool Application2D::startup()
 
 	MenuState* splash = new MenuState();
 	MenuState* mainMenu = new MenuState();
-	MenuState* game = new MenuState();
+	PlayState* game = new PlayState();
 	MenuState* options = new MenuState();
 	MenuState* pause = new MenuState();
 
@@ -131,6 +131,17 @@ bool Application2D::startup()
 		splashText->origin = Vector2(0.05f, 0.8f);
 		splashText->scale = Vector2(1.0f, 1.0f);
 
+		TickBox* tickbox = new TickBox();
+		tickbox->hitbox.min_ = Vector2(0.47f, 0.53f);
+		tickbox->hitbox.max_ = Vector2(0.53f, 0.59f);
+		tickbox->falseTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "tick.png");
+		tickbox->trueTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "tickOn.png");
+
+
+		Sprite* sprite = new Sprite();
+		sprite->hitbox.min_ = Vector2(0.37f, 0.43f);
+		sprite->hitbox.max_ = Vector2(0.43f, 0.59f);
+		sprite->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
 
 		splash->items.pushBack(splashTimer);
 		splash->items.pushBack(splashText);
@@ -140,9 +151,7 @@ bool Application2D::startup()
 		mainMenu->items.pushBack(mainMenuText);
 		mainMenu->items.pushBack(opPush2);
 
-		game->items.pushBack(paPush);
-		game->items.pushBack(singlePop);
-		game->items.pushBack(gameText);
+		game->pauseAct = paPushAct;
 
 		pause->items.pushBack(singlePop);
 		pause->items.pushBack(doublePop);
@@ -153,6 +162,8 @@ bool Application2D::startup()
 
 		options->items.pushBack(singlePop);
 		options->items.pushBack(optionsText);
+		options->items.pushBack(tickbox);
+		options->items.pushBack(sprite);
 	}
 
 	gameStateStack.pushBack(splash);
@@ -173,7 +184,7 @@ void Application2D::update(float deltaTime)
 
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 	{
-		quit();
+		//quit();
 	}
 
 	//get the screen dimensions

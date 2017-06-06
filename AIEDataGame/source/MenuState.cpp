@@ -23,7 +23,7 @@ void MenuState::draw(Application2D* appPtr)
 	}
 }
 
-//called when the menu state becomes the uppermost gamestate in the stack
+//called when the gamestate becomes the uppermost gamestate in the stack
 void MenuState::onEnter(Application2D* appPtr)
 {
 	firstFrame = true;

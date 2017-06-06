@@ -11,11 +11,14 @@
 #include "LinkedList.h"
 #include "GameState.h"
 #include "MenuState.h"
+#include "PlayState.h"
 
 #include "Item.h"
 #include "Button.h"
 #include "Text.h"
 #include "Timer.h"
+#include "TickBox.h"
+#include "Sprite.h"
 
 #include "Action.h"
 #include "PushAction.h"
