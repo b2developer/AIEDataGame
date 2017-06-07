@@ -166,13 +166,16 @@
     <ClInclude Include="source\AABB.h" />
     <ClInclude Include="source\Action.h" />
     <ClInclude Include="source\Application2D.h" />
+    <ClInclude Include="source\BaseComponent.h" />
     <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\CollisionSolver.h" />
     <ClInclude Include="source\FontResource.h" />
     <ClInclude Include="source\FunctionAction.h" />
+    <ClInclude Include="source\GameObject.h" />
     <ClInclude Include="source\GameState.h" />
     <ClInclude Include="source\Item.h" />
     <ClInclude Include="source\KeyList.h" />
+    <ClInclude Include="source\LinkedGraph.h" />
     <ClInclude Include="source\LinkedList.h" />
     <ClInclude Include="source\LinkedTree.h" />
     <ClInclude Include="source\Log.h" />
@@ -181,6 +184,7 @@
     <ClInclude Include="source\PlayState.h" />
     <ClInclude Include="source\PopAction.h" />
     <ClInclude Include="source\PushAction.h" />
+    <ClInclude Include="source\QuadTree.h" />
     <ClInclude Include="source\Resource.h" />
     <ClInclude Include="source\ResourceManager.h" />
     <ClInclude Include="source\Sprite.h" />
