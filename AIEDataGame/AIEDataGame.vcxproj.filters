@@ -194,5 +194,11 @@
     <ClInclude Include="source\GameObject.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="source\TransformComponent.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RendererComponent.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

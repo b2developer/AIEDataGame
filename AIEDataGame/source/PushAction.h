@@ -1,12 +1,13 @@
 #pragma once
-#include "Action.h"
 #include "GameState.h"
+#include "Action.h"
 
 /*
 * class PushAction
 * child class of Action
 *
-* adds the gamestate to the stack
+* adds a gamestate to the stack when called upon
+* by several different item child objects
 *
 * author: Bradley Booth, Academy of Interactive Entertainment, 2017
 */
@@ -14,7 +15,7 @@ class PushAction : public Action
 {
 public:
 
-	GameState* pushed; //gamestate to be added to the stack
+	GameState* pushed = nullptr; //gamestate to push
 
 	/*
 	* PushAction()
@@ -24,19 +25,20 @@ public:
 
 	/*
 	* ~PushAction()
-	* virtual function
 	* default destructor
 	*/
-	virtual ~PushAction() {};
+	~PushAction() {};
 
 	/*
 	* execute
 	* overrides Action's execute(Application2D* appPtr)
 	*
-	* adds the stored gamestate to the stack
+	* runs whenever an item associated with it gets called upon
+	* adds the pushed gamestate pointer to the stack
 	*
-	* @param Application2D* appPtr - application pointer to run the action through
+	* Application2D* appPtr - pointer to the application to apply the action to
 	* @returns void
 	*/
 	void execute(Application2D* appPtr) override;
+
 };

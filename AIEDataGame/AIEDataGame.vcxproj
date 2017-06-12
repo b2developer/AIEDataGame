@@ -185,6 +185,7 @@
     <ClInclude Include="source\PopAction.h" />
     <ClInclude Include="source\PushAction.h" />
     <ClInclude Include="source\QuadTree.h" />
+    <ClInclude Include="source\RendererComponent.h" />
     <ClInclude Include="source\Resource.h" />
     <ClInclude Include="source\ResourceManager.h" />
     <ClInclude Include="source\Sprite.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="source\TextureResource.h" />
     <ClInclude Include="source\TickBox.h" />
     <ClInclude Include="source\Timer.h" />
+    <ClInclude Include="source\TransformComponent.h" />
     <ClInclude Include="source\UnitTest.h" />
   </ItemGroup>
   <ItemGroup>

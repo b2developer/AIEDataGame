@@ -53,7 +53,7 @@ public:
 *
 * a singleton class that manages all loaded files
 * by creating and destroying them dynamically depending on
-* what objects require them
+* what objects require them (basic pooling)
 *
 * author: Bradley Booth, Academy of Interactive Entertainment, 2017
 */

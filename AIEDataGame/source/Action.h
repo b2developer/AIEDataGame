@@ -6,9 +6,8 @@ class Application2D;
 /*
 * class Action
 *
-* base class for actions that can occur when a UI element
-* calls upon them, allows switching of states, changing of
-* internal values and other specific actions
+* base class for objects that perform actions
+* on the game when called upon by several different item child objects
 *
 * author: Bradley Booth, Academy of Interactive Entertainment, 2017
 */
@@ -24,19 +23,19 @@ public:
 
 	/*
 	* ~Action()
-	* virtual function
 	* default destructor
 	*/
-	virtual ~Action() {};
+	~Action() {};
 
 	/*
 	* execute
-	* virtual function
-	*
-	* runs the action
+	* abstract function
 	* 
-	* @param Application2D* appPtr - application pointer to run the action through
+	* runs whenever an item associated with it gets called upon
+	*
+	* @param Application2D* appPtr - pointer to the application to apply the action to
 	* @returns void
 	*/
 	virtual void execute(Application2D* appPtr) = 0;
+
 };

@@ -1,5 +1,15 @@
 #pragma once
 
+class GameObject; //forward decleration to game object
+
+enum ComponentType
+{
+	TRANSFORM,
+	RENDERER,
+	COLLIDER,
+	ENTITY,
+};
+
 /*
 * class BaseComponent
 *
@@ -23,4 +33,24 @@ public:
 	* default destructor
 	*/
 	~BaseComponent() {};
+
+	/*
+	* initialise
+	* virtual function
+	*
+	* initialises the component, only gets called if component is  attached to a gameobject
+	*
+	* @returns void
+	*/
+	virtual void initialise() {};
+
+	/*
+	* update
+	* virtual function
+	*
+	* runs once per frame, only gets called if the component is attached to a gameobject
+	*
+	* @returns void
+	*/
+	virtual void update() {};
 };
