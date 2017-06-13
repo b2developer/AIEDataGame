@@ -46,7 +46,7 @@ bool Application2D::startup()
 
 	for (int i = 0; i < 100; i++)
 	{
-		m_pool.removeObject("obj1", &objList[i]);
+		m_pool.removeObject("obj1", objList[i]);
 	}
 
 	objList.clear();
