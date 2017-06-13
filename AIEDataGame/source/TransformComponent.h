@@ -28,4 +28,26 @@ public:
 	*/
 	virtual ~TransformComponent() {};
 
+	/*
+	* setRelative
+	*
+	* sets this transform component as if the origin was represented
+	* by the transform component passed into it
+	*
+	* @param TransformComponent* other - pointer to the other transform component that is representing the origin
+	* @returns void
+	*/
+	void setRelative(TransformComponent other);
+
+	/*
+	* setRelative
+	*
+	* sets this transform component as if the origin was represented
+	* by the Vector2 passed into it
+	*
+	* @param Vector2* other - pointer to the Vector2 that is representing the origin
+	* @returns void
+	*/
+	void setRelative(Vector2 other);
+
 };

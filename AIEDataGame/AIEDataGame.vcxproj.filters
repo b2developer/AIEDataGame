@@ -46,6 +46,12 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{ca9edb67-8b4e-4fa3-86e3-ea882779e8fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Pool">
+      <UniqueIdentifier>{c7acc9e2-c7d1-407a-8653-a64a5c85562e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pool">
+      <UniqueIdentifier>{c67e0277-974e-4601-b2f5-041f62e774c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -101,6 +107,21 @@
     </ClCompile>
     <ClCompile Include="source\Sprite.cpp">
       <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TransformComponent.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RendererComponent.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ColliderComponent.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameObject.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Pool.cpp">
+      <Filter>Header Files\Pool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +220,15 @@
     </ClInclude>
     <ClInclude Include="source\RendererComponent.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ColliderComponent.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SinglePool.h">
+      <Filter>Source Files\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Pool.h">
+      <Filter>Source Files\Pool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

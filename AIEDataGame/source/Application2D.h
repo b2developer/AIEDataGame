@@ -7,6 +7,8 @@
 #include "Texture.h"
 #include "Audio.h"
 
+#include "Pool.h"
+
 #include "MathLibrary.h"
 #include "LinkedList.h"
 #include "GameState.h"
@@ -100,6 +102,8 @@ public:
 
 	Vector2 m_camera = Vector2(0, 0); //position of the renderer
 	Vector2 m_screen = Vector2(0, 0); //dimensions of the screen
+
+	Pool m_pool = Pool(); //pool for all objects registered to it
 
 	LinkedList<GameState*> gameStateStack; //gamestate stack, contains game states layered on top of each other
 	LinkedList<GameState*> gameStateList; //global gamestate list, keeps all gamestates as static pointers

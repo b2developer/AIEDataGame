@@ -1,7 +1,10 @@
 #pragma once
 #include "BaseComponent.h"
-#include "TransformComponent.h"
+#include "AABB.h"
 #include "TextureResource.h"
+
+//forward declaration
+class Application2D;
 
 /*
 * class RendererComponent
@@ -14,8 +17,8 @@ class RendererComponent : public BaseComponent
 {
 public:
 
-	TransformComponent* transform;
-	TextureResource* texture;
+	TextureResource* textureRes; //the texture that the renderer can render
+	AABB region; //the region to render to
 
 	/*
 	* RendererComponent
@@ -29,5 +32,15 @@ public:
 	* default destructor
 	*/
 	virtual ~RendererComponent() {};
+
+	/*
+	* render
+	* 
+	* draws the texture to the screen
+	*
+	* @param Application2D* appPtr - pointer to the application that will render it
+	* @returns void
+	*/
+	void render(Application2D* appPtr);
 
 };

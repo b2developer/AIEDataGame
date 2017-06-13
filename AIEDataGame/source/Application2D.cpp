@@ -27,6 +27,30 @@ bool Application2D::startup()
 	RESOURCE_MAN->releaseResource("green_square.png");
 	RESOURCE_MAN->releaseResource("red_square.png");
 
+	BasePool* o1Pool = new SinglePool<Object*>();
+	BasePool* o2Pool = new SinglePool<Object2*>();
+	BasePool* o3Pool = new SinglePool<Object3*>();
+
+	o1Pool->setDecay(0.95f);
+
+	m_pool.addPool("obj1", o1Pool);
+	m_pool.addPool("obj2", o2Pool);
+	m_pool.addPool("obj3", o3Pool);
+
+	LinkedList<Object*> objList = LinkedList<Object*>(0);
+
+	for (int i = 0; i < 100; i++)
+	{
+		objList.pushBack((Object*)m_pool.requestObject("obj1"));
+	}
+
+	for (int i = 0; i < 100; i++)
+	{
+		m_pool.removeObject("obj1", &objList[i]);
+	}
+
+	objList.clear();
+
 	MenuState* splash = new MenuState();
 	MenuState* mainMenu = new MenuState();
 	PlayState* game = new PlayState();
@@ -181,6 +205,8 @@ void Application2D::shutdown()
 void Application2D::update(float deltaTime)
 {
 	aie::Input* input = aie::Input::getInstance();
+
+	m_pool.updateDecay(deltaTime, 60.0f);
 
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 	{

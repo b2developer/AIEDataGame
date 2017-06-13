@@ -38,7 +38,7 @@ public:
 	* initialise
 	* virtual function
 	*
-	* initialises the component, only gets called if component is  attached to a gameobject
+	* initialises the component, only gets called if component is attached to a gameobject
 	*
 	* @returns void
 	*/
