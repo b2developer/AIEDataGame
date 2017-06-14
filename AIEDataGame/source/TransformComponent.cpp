@@ -1,6 +1,12 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 
+//initialise the transform component
+void TransformComponent::initialise()
+{
+	parent->transform = this;
+}
+
 //sets the origin of the transform component
 void TransformComponent::setRelative(TransformComponent other)
 {

@@ -94,7 +94,14 @@ public:
 	*/
 	void draw();
 
+
+
+
 	aie::Renderer2D* m_renderer2D; //draws everything
+
+	//frame-rate limiters
+	float maxFrame = 1 / 30.0f;
+	float minFrame = 1 / 120.0f;
 
 	//previous state variables
 	bool PREV_MOUSE_0_STATE = false;
@@ -103,7 +110,7 @@ public:
 	Vector2 m_camera = Vector2(0, 0); //position of the renderer
 	Vector2 m_screen = Vector2(0, 0); //dimensions of the screen
 
-	Pool m_pool = Pool(); //pool for all objects registered to it
+	Pool* m_pool; //pool for all objects registered to it
 
 	LinkedList<GameState*> gameStateStack; //gamestate stack, contains game states layered on top of each other
 	LinkedList<GameState*> gameStateList; //global gamestate list, keeps all gamestates as static pointers

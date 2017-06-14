@@ -17,6 +17,10 @@ class Application2D;
 class GameObject
 {
 public:
+	
+	LinkedNode<GameObject*>* thisNode = nullptr; //position in the gameObjects array in playState
+
+	TransformComponent* transform = nullptr; //most components need to know about the transform
 
 	LinkedList<BaseComponent*> components;
 

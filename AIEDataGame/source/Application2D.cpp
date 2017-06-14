@@ -17,45 +17,28 @@ bool Application2D::startup()
 
 	m_renderer2D = new aie::Renderer2D();
 
-	TextureResource* redSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
-	TextureResource* blueSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
-	TextureResource* greenSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
-	TextureResource* redSquare2 = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+	m_pool = new Pool();
 
-	RESOURCE_MAN->releaseResource("red_square.png");
-	RESOURCE_MAN->releaseResource("blue_square.png");
-	RESOURCE_MAN->releaseResource("green_square.png");
-	RESOURCE_MAN->releaseResource("red_square.png");
+	//create singular pools for all necessary types
+	BasePool* tPool = new SinglePool<TransformComponent>();
+	BasePool* cPool = new SinglePool<ColliderComponent>();
+	BasePool* rPool = new SinglePool<RendererComponent>();
+	BasePool* sPool = new SinglePool<ScriptComponent>();
+	BasePool* gPool = new SinglePool<GameObject>();
 
-	BasePool* o1Pool = new SinglePool<Object*>();
-	BasePool* o2Pool = new SinglePool<Object2*>();
-	BasePool* o3Pool = new SinglePool<Object3*>();
-
-	o1Pool->setDecay(0.95f);
-
-	m_pool.addPool("obj1", o1Pool);
-	m_pool.addPool("obj2", o2Pool);
-	m_pool.addPool("obj3", o3Pool);
-
-	LinkedList<Object*> objList = LinkedList<Object*>(0);
-
-	for (int i = 0; i < 100; i++)
-	{
-		objList.pushBack((Object*)m_pool.requestObject("obj1"));
-	}
-
-	for (int i = 0; i < 100; i++)
-	{
-		m_pool.removeObject("obj1", objList[i]);
-	}
-
-	objList.clear();
+	m_pool->addPool("transform", tPool);
+	m_pool->addPool("collider", cPool);
+	m_pool->addPool("renderer", rPool);
+	m_pool->addPool("script", sPool);
+	m_pool->addPool("gameObject", gPool);
 
 	MenuState* splash = new MenuState();
 	MenuState* mainMenu = new MenuState();
 	PlayState* game = new PlayState();
 	MenuState* options = new MenuState();
 	MenuState* pause = new MenuState();
+
+	game->poolPtr = m_pool;
 
 	//main menu items
 	{
@@ -206,26 +189,12 @@ void Application2D::update(float deltaTime)
 {
 	aie::Input* input = aie::Input::getInstance();
 
-	m_pool.updateDecay(deltaTime, 60.0f);
+	m_pool->updateDecay(deltaTime, 60.0f);
 
-	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
-	{
-		//quit();
-	}
-
-	//get the screen dimensions
-	m_screen = Vector2((float)getWindowWidth(), (float)getWindowHeight());
-
-	TextureResource* redSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
-	TextureResource* blueSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
-	TextureResource* greenSquare = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
-	TextureResource* redSquare2 = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
-
-	RESOURCE_MAN->releaseResource("red_square.png");
-	RESOURCE_MAN->releaseResource("blue_square.png");
-	RESOURCE_MAN->releaseResource("green_square.png");
-	RESOURCE_MAN->releaseResource("red_square.png");
-
+	//deltaTime sanitisation
+	deltaTime = deltaTime < minFrame ? minFrame : deltaTime; //clamp to above the minimum time for a frame
+	deltaTime = deltaTime > maxFrame ? maxFrame : deltaTime; //clamo to below the maximum time for a frame
+	
 	//check that there is still gamestates left in the stack
 	if (gameStateStack.size > 0)
 	{
@@ -276,6 +245,9 @@ void Application2D::update(float deltaTime)
 		quit();
 	}
 
+	//get the screen dimensions
+	m_screen = Vector2((float)getWindowWidth(), (float)getWindowHeight());
+
 	PREV_MOUSE_0_STATE = input->isMouseButtonDown(0);
 	PREV_MOUSE_1_STATE = input->isMouseButtonDown(1);
 
@@ -304,8 +276,10 @@ void Application2D::draw()
 				break;
 			}
 		}
-		
+
 	}
 
 	m_renderer2D->end();
 }
+
+

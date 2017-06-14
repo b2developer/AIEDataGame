@@ -52,6 +52,12 @@
     <Filter Include="Source Files\Pool">
       <UniqueIdentifier>{c67e0277-974e-4601-b2f5-041f62e774c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Factory">
+      <UniqueIdentifier>{ede2849e-6b9a-4d33-aac0-d5b1be7b2215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Factory">
+      <UniqueIdentifier>{9aec715e-07d4-45d4-9400-6aa7797efe4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -121,7 +127,10 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="source\Pool.cpp">
-      <Filter>Header Files\Pool</Filter>
+      <Filter>Source Files\Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Factory.cpp">
+      <Filter>Source Files\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,11 +233,17 @@
     <ClInclude Include="source\ColliderComponent.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="source\SinglePool.h">
-      <Filter>Source Files\Pool</Filter>
+    <ClInclude Include="source\Factory.h">
+      <Filter>Header Files\Factory</Filter>
     </ClInclude>
     <ClInclude Include="source\Pool.h">
-      <Filter>Source Files\Pool</Filter>
+      <Filter>Header Files\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SinglePool.h">
+      <Filter>Header Files\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScriptComponent.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

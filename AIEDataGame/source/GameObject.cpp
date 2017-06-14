@@ -9,6 +9,7 @@ void GameObject::initialise(Application2D * appPtr)
 	//iterate through all of the components
 	for (; iter != components.end(); iter++)
 	{
+		iter.m_node->value->parent = this; //set the parent of the transform
 		iter.m_node->value->initialise();
 	}
 }
@@ -21,6 +22,6 @@ void GameObject::update(Application2D* appPtr, float deltaTime)
 	//iterate through all of the components
 	for (; iter != components.end(); iter++)
 	{
-		iter.m_node->value->update();
+		iter.m_node->value->update(appPtr, deltaTime);
 	}
 }

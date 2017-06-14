@@ -1,5 +1,6 @@
 #pragma once
 #include "LinkedList.h"
+#include "Factory.h"
 #include <cmath>
 
 //template macro
@@ -74,20 +75,7 @@ public:
 	virtual void removeObject(void* instancePtr) = 0;
 };
 
-struct Object
-{
-	int fie = 0;
-};
 
-struct Object2
-{
-	int foe = 0;
-};
-
-struct Object3
-{
-	int fum = 0;
-};
 
 /*
 * class SinglePool
@@ -167,7 +155,7 @@ public:
 		int prevSize = (int)decimalSize;
 
 		//take the decayRate to the power
-		//decimalSize *= powf(decayRate, multiplier);
+		decimalSize *= powf(decayRate, multiplier);
 
 		int currSize = (int)decimalSize;
 
@@ -176,11 +164,14 @@ public:
 		{
 			T* instancePtr = available[0];
 
-			//remove the instance from the pool
-			available.popBack();
-
 			//delete the instance
 			delete instancePtr;
+
+			//remove the instance from the pool
+			available.popFront();
+
+			decimalSize = float(available.size);
+			
 		}
 	}
 
@@ -210,7 +201,7 @@ public:
 		}
 		else //create a new instance
 		{
-			T* instancePtr = new T();
+			T* instancePtr = FACT->createObject<T>();
 
 			return instancePtr;
 		}

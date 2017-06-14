@@ -147,6 +147,7 @@
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\ColliderComponent.cpp" />
     <ClCompile Include="source\CollisionSolver.cpp" />
+    <ClCompile Include="source\Factory.cpp" />
     <ClCompile Include="source\FontResource.cpp" />
     <ClCompile Include="source\FunctionAction.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\ColliderComponent.h" />
     <ClInclude Include="source\CollisionSolver.h" />
+    <ClInclude Include="source\Factory.h" />
     <ClInclude Include="source\FontResource.h" />
     <ClInclude Include="source\FunctionAction.h" />
     <ClInclude Include="source\GameObject.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="source\MenuState.h" />
     <ClInclude Include="source\PlayState.h" />
     <ClInclude Include="source\Pool.h" />
+    <ClInclude Include="source\ScriptComponent.h" />
     <ClInclude Include="source\SinglePool.h" />
     <ClInclude Include="source\PopAction.h" />
     <ClInclude Include="source\PushAction.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "LinkedList.h"
 #include "Vector2.h"
 
 /*
@@ -12,6 +13,8 @@
 class TransformComponent : public BaseComponent
 {
 public:
+
+	LinkedNode<TransformComponent*>* thisNode = nullptr; //position in the transforms array in playState
 
 	Vector2 position; //the vector help by the transform
 
@@ -27,6 +30,16 @@ public:
 	* default destructor
 	*/
 	virtual ~TransformComponent() {};
+
+	/*
+	* initialise
+	* overrides BaseComponent's initialise()
+	*
+	* initialises the component, only gets called if component is attached to a gameobject
+	*
+	* @returns void
+	*/
+	void initialise() override;
 
 	/*
 	* setRelative

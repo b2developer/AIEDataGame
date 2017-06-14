@@ -1,6 +1,8 @@
 #pragma once
 
-class GameObject; //forward decleration to game object
+class GameObject; //forward declaration to game object
+class Application2D; //forward declaration of the application
+class TransformComponent; //forward declaration of the transform component
 
 enum ComponentType
 {
@@ -21,6 +23,8 @@ enum ComponentType
 class BaseComponent
 {
 public:
+
+	GameObject* parent = nullptr; //pointer to the holder of this component
 	
 	/*
 	* BaseComponent
@@ -50,7 +54,9 @@ public:
 	*
 	* runs once per frame, only gets called if the component is attached to a gameobject
 	*
+	* @param Application2D* appPtr - pointer to the application that called it
+	* @param float deltaTime - the amount of time passed since the last frame
 	* @returns void
 	*/
-	virtual void update() {};
+	virtual void update(Application2D* appPtr, float deltaTime) {};
 };
