@@ -58,4 +58,35 @@ public:
 	a
 	*/
 	void update(Application2D* appPtr, float deltaTime);
+
+	TEMPLATE
+	/*
+	* getComponentsOfType
+	* template
+	*
+	* gets a list of components that
+	* match the specified type
+	*
+	* @returns LinkedList<T*> - list of pointers to components
+	*/
+	LinkedList<T*> getComponentsOfType()
+	{
+		LinkedList<T*> list = LinkedList<T*>(0);
+
+		LinkedList<BaseComponent*>::Iterator iter = components.begin();
+
+		//iterate through all of the components
+		for (; iter != components.end(); iter++)
+		{
+			T* pointer = dynamic_cast<T*>(iter.m_node->value);
+
+			//test for a type match between the template and the iterated to component
+			if (pointer != nullptr)
+			{
+				list.pushBack(pointer);
+			}
+		}
+
+		return list;
+	}
 };

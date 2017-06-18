@@ -147,6 +147,8 @@
     <ClCompile Include="source\Button.cpp" />
     <ClCompile Include="source\ColliderComponent.cpp" />
     <ClCompile Include="source\CollisionSolver.cpp" />
+    <ClCompile Include="source\Director.cpp" />
+    <ClCompile Include="source\EntityScript.cpp" />
     <ClCompile Include="source\Factory.cpp" />
     <ClCompile Include="source\FontResource.cpp" />
     <ClCompile Include="source\FunctionAction.cpp" />
@@ -154,6 +156,7 @@
     <ClCompile Include="source\Log.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\MenuState.cpp" />
+    <ClCompile Include="source\PlayerBuilder.cpp" />
     <ClCompile Include="source\PlayState.cpp" />
     <ClCompile Include="source\Pool.cpp" />
     <ClCompile Include="source\PopAction.cpp" />
@@ -167,15 +170,19 @@
     <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\TransformComponent.cpp" />
     <ClCompile Include="source\UnitTest.cpp" />
+    <ClCompile Include="source\WallBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AABB.h" />
     <ClInclude Include="source\Action.h" />
     <ClInclude Include="source\Application2D.h" />
     <ClInclude Include="source\BaseComponent.h" />
+    <ClInclude Include="source\Builder.h" />
     <ClInclude Include="source\Button.h" />
     <ClInclude Include="source\ColliderComponent.h" />
     <ClInclude Include="source\CollisionSolver.h" />
+    <ClInclude Include="source\Director.h" />
+    <ClInclude Include="source\EntityScript.h" />
     <ClInclude Include="source\Factory.h" />
     <ClInclude Include="source\FontResource.h" />
     <ClInclude Include="source\FunctionAction.h" />
@@ -189,6 +196,7 @@
     <ClInclude Include="source\Log.h" />
     <ClInclude Include="source\MathLibrary.h" />
     <ClInclude Include="source\MenuState.h" />
+    <ClInclude Include="source\PlayerBuilder.h" />
     <ClInclude Include="source\PlayState.h" />
     <ClInclude Include="source\Pool.h" />
     <ClInclude Include="source\ScriptComponent.h" />
@@ -206,6 +214,7 @@
     <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\TransformComponent.h" />
     <ClInclude Include="source\UnitTest.h" />
+    <ClInclude Include="source\WallBuilder.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AIEMathsLibrary\AIEMathsLibrary.vcxproj">

@@ -23,14 +23,21 @@ bool Application2D::startup()
 	BasePool* tPool = new SinglePool<TransformComponent>();
 	BasePool* cPool = new SinglePool<ColliderComponent>();
 	BasePool* rPool = new SinglePool<RendererComponent>();
-	BasePool* sPool = new SinglePool<ScriptComponent>();
 	BasePool* gPool = new SinglePool<GameObject>();
+
+	tPool->setDecay(0.99f);
 
 	m_pool->addPool("transform", tPool);
 	m_pool->addPool("collider", cPool);
 	m_pool->addPool("renderer", rPool);
-	m_pool->addPool("script", sPool);
 	m_pool->addPool("gameObject", gPool);
+
+	//create director and some builders
+	director = new Director();
+	playerBuilder = new PlayerBuilder();
+	wallBuilder = new WallBuilder();
+
+	director->builder = playerBuilder;
 
 	MenuState* splash = new MenuState();
 	MenuState* mainMenu = new MenuState();
@@ -102,7 +109,7 @@ bool Application2D::startup()
 
 		//timer
 		Timer* splashTimer = new Timer();
-		splashTimer->maxTime = 3.0f;
+		splashTimer->maxTime = 1.0f;
 		splashTimer->currentTime = splashTimer->maxTime;
 		splashTimer->reactions.pushBack(singlePopAct);
 		splashTimer->reactions.pushBack(mmPushAct);
@@ -144,7 +151,6 @@ bool Application2D::startup()
 		tickbox->falseTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "tick.png");
 		tickbox->trueTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "tickOn.png");
 
-
 		Sprite* sprite = new Sprite();
 		sprite->hitbox.min_ = Vector2(0.37f, 0.43f);
 		sprite->hitbox.max_ = Vector2(0.43f, 0.59f);
@@ -182,6 +188,11 @@ bool Application2D::startup()
 void Application2D::shutdown()
 {
 	delete m_renderer2D;
+
+	delete m_pool;
+
+	delete director;
+	delete playerBuilder;
 }
 
 //simulates one frame
@@ -193,7 +204,7 @@ void Application2D::update(float deltaTime)
 
 	//deltaTime sanitisation
 	deltaTime = deltaTime < minFrame ? minFrame : deltaTime; //clamp to above the minimum time for a frame
-	deltaTime = deltaTime > maxFrame ? maxFrame : deltaTime; //clamo to below the maximum time for a frame
+	deltaTime = deltaTime > maxFrame ? maxFrame : deltaTime; //clamp to below the maximum time for a frame
 	
 	//check that there is still gamestates left in the stack
 	if (gameStateStack.size > 0)

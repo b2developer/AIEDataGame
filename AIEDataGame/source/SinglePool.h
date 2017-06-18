@@ -155,7 +155,7 @@ public:
 		int prevSize = (int)decimalSize;
 
 		//take the decayRate to the power
-		decimalSize *= powf(decayRate, multiplier);
+		decimalSize *= powf(decayRate, multiplier / targetFrameRate);
 
 		int currSize = (int)decimalSize;
 

@@ -12,6 +12,15 @@
 #include "ColliderComponent.h"
 #include "RendererComponent.h"
 
+//type for objects that the playstate stores pointers to
+enum class ObjectType
+{
+	GAMEOBJECT,
+	TRANSFORM,
+	SCRIPT,
+	COLLIDER,
+	RENDERER,
+};
 
 /*
 * class PlayState

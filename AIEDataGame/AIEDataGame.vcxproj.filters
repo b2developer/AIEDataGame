@@ -58,6 +58,12 @@
     <Filter Include="Source Files\Factory">
       <UniqueIdentifier>{9aec715e-07d4-45d4-9400-6aa7797efe4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Builder">
+      <UniqueIdentifier>{eafdb82c-f330-48ad-ba92-9dbe29c2beea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Builder">
+      <UniqueIdentifier>{a508c284-313d-4446-b72a-811e28e3c81e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -131,6 +137,18 @@
     </ClCompile>
     <ClCompile Include="source\Factory.cpp">
       <Filter>Source Files\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Director.cpp">
+      <Filter>Source Files\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerBuilder.cpp">
+      <Filter>Source Files\Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EntityScript.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WallBuilder.cpp">
+      <Filter>Source Files\Builder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +262,21 @@
     </ClInclude>
     <ClInclude Include="source\ScriptComponent.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Director.h">
+      <Filter>Header Files\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Builder.h">
+      <Filter>Header Files\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerBuilder.h">
+      <Filter>Header Files\Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EntityScript.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WallBuilder.h">
+      <Filter>Header Files\Builder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

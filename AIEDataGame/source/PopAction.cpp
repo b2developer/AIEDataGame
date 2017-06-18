@@ -18,10 +18,4 @@ void PopAction::execute(Application2D * appPtr)
 			break;
 		}
 	}
-
-	//call onEnter() on the gamestate that was just promoted to the front of the stack, if one was promoted
-	if (appPtr->gameStateStack.size > 0)
-	{
-		appPtr->gameStateStack[0]->onEnter(appPtr);
-	}
 }

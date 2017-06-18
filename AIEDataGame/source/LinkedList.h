@@ -476,6 +476,7 @@ public:
 	*/
 	T& operator[] (const int index)
 	{
+
 		LinkedNode<T>* node = m_first;
 
 		//iterate through all of the nodes
@@ -485,6 +486,32 @@ public:
 		}
 
 		return node->value;
+	}
+
+	/*
+	* startNode
+	*
+	* gets the first linked node
+	* in the linked list
+	*
+	* @returns LinkedNode<T>* - pointer to the first node
+	*/
+	LinkedNode<T>* startNode()
+	{
+		return m_first;
+	}
+
+	/*
+	* endNode
+	*
+	* gets the last linked node
+	* in the linked list
+	*
+	* @returns LinkedNode<T>* - pointer to the last node
+	*/
+	LinkedNode<T>* endNode()
+	{
+		return m_last;
 	}
 
 	/*

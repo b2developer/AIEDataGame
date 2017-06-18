@@ -52,7 +52,17 @@ Collision CollisionSolver::testCollision(AABB aabb, Vector2 point)
 				seperation.y = upSep;
 			}
 
-			return Collision(true, seperation);
+			//only consider the smallest seperation
+			if (ABS(seperation.x) > ABS(seperation.y))
+			{
+				seperation.x = 0.0f;
+			}
+			else
+			{
+				seperation.y = 0.0f;
+			}
+
+			return Collision(true, seperation * -1.0f);
 		}
 	}
 
@@ -101,7 +111,17 @@ Collision CollisionSolver::testCollision(AABB aabb1, AABB aabb2)
 				seperation.y = upSep;
 			}
 
-			return Collision(true, seperation);
+			//only consider the smallest seperation
+			if (ABS(seperation.x) > ABS(seperation.y))
+			{
+				seperation.x = 0.0f;
+			}
+			else
+			{
+				seperation.y = 0.0f;
+			}
+
+			return Collision(true, seperation * -1.0f);
 		}
 	}
 

@@ -15,6 +15,7 @@ public:
 	Vector2 min_ = Vector2(); //bottom left corner
 	Vector2 max_ = Vector2(); //top right corner
 
+
 	/*
 	* AABB()
 	* default constructor

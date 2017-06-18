@@ -9,7 +9,7 @@ void GameObject::initialise(Application2D * appPtr)
 	//iterate through all of the components
 	for (; iter != components.end(); iter++)
 	{
-		iter.m_node->value->parent = this; //set the parent of the transform
+		iter.m_node->value->parent = this; //set the parent of the gameObjects
 		iter.m_node->value->initialise();
 	}
 }

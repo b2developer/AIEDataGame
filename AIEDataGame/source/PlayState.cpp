@@ -7,6 +7,9 @@ void PlayState::update(Application2D* appPtr, float deltaTime)
 {
 	aie::Input* input = aie::Input::getInstance();
 
+	updateScripts(appPtr, deltaTime);
+	updateColliders(appPtr, deltaTime);
+
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 	{
 		pauseAct->execute(appPtr);
@@ -24,32 +27,39 @@ void PlayState::onEnter(Application2D* appPtr)
 {
 	firstFrame = true;
 
-	//instantiating the game object
-	GameObject* player = (GameObject*)poolPtr->requestObject("gameObject");
+	appPtr->director->builder = appPtr->playerBuilder;
 
-	//instantiating individual components
-	TransformComponent* transform = (TransformComponent*)poolPtr->requestObject("transform");
-	ColliderComponent* collider = (ColliderComponent*)poolPtr->requestObject("collider");
-	RendererComponent* renderer = (RendererComponent*)poolPtr->requestObject("renderer");
+	//instantiate the gameobject
+	GameObject* player = appPtr->director->buildGameObject(appPtr, this);
 
-	renderer->textureRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_box.png");
-	renderer->region = AABB(Vector2(-0.2, -0.2), Vector2(0.2, 0.2));
+	LinkedList<TransformComponent*> transformList = player->getComponentsOfType<TransformComponent>();
+	LinkedList<RendererComponent*> rendererList = player->getComponentsOfType<RendererComponent>();
+	LinkedList<ColliderComponent*> colliderList = player->getComponentsOfType<ColliderComponent>();
 
-	transform->position = Vector2(0.5, 0.5);
+	transformList[0]->position = Vector2(0.5f, 0.5f);
 
-	//linking the components
-	player->components.pushBack(transform);
-	player->components.pushBack(collider);
-	player->components.pushBack(renderer);
+	rendererList[0]->textureRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_box.png");
+	rendererList[0]->region = AABB(Vector2(-0.03f, -0.03f), Vector2(0.03f, 0.03f));
 
-	//setting up
-	player->initialise(appPtr);
+	colliderList[0]->region = rendererList[0]->region;
+	colliderList[0]->mtvBias = 1.0f;
 
-	//linking the components to the play state
-	gameObjects.pushBack(player);
-	transforms.pushBack(transform);
-	colliders.pushBack(collider);
-	renderers.pushBack(renderer);
+	appPtr->director->builder = appPtr->wallBuilder;
+
+	//instantiate the gameobject
+	GameObject* wall = appPtr->director->buildGameObject(appPtr, this);
+	
+	transformList = wall->getComponentsOfType<TransformComponent>();
+	rendererList = wall->getComponentsOfType<RendererComponent>();
+	colliderList = wall->getComponentsOfType<ColliderComponent>();
+
+	transformList[0]->position = Vector2(0.5f, 0.2f);
+
+	rendererList[0]->textureRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_box.png");
+	rendererList[0]->region = AABB(Vector2(-0.03f, -0.03f), Vector2(0.03f, 0.03f));
+
+	colliderList[0]->region = rendererList[0]->region;
+	colliderList[0]->mtvBias = 0.0f;
 
 }
 
@@ -113,7 +123,7 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 						iter1.m_node->value->parent->transform->position += collTest.MTV * mtv1;
 						iter2.m_node->value->parent->transform->position += collTest.MTV * -mtv2;
 					}
-				}
+				} 
 			}
 		}
 	}
@@ -141,9 +151,23 @@ void PlayState::cleanUp()
 	//iterate through all gameobjects
 	for (; iter != gameObjects.end(); iter++)
 	{
+		LinkedList<BaseComponent*>::Iterator compIter = iter.m_node->value->components.begin();
+
+		for (; compIter != iter.m_node->value->components.end(); compIter++)
+		{
+			ScriptComponent* script = dynamic_cast<ScriptComponent*>(compIter.m_node->value);
+
+			if (script != nullptr)
+			{
+				delete script;
+			}
+		}
+
+		iter.m_node->value->components.clear();
 		poolPtr->removeObject("gameObject", iter.m_node->value);
 	}
 
+	gameObjects.clear();
 
 	LinkedList<TransformComponent*>::Iterator iter2 = transforms.begin();
 
@@ -153,30 +177,28 @@ void PlayState::cleanUp()
 		poolPtr->removeObject("transform", iter2.m_node->value);
 	}
 
+	transforms.clear();
 
-	LinkedList<ScriptComponent*>::Iterator iter3 = scripts.begin();
-
-	//iterate through all scripts
-	for (; iter3 != scripts.end(); iter3++)
-	{
-		poolPtr->removeObject("script", iter3.m_node->value);
-	}
-
-
-	LinkedList<ColliderComponent*>::Iterator iter4 = colliders.begin();
+	LinkedList<ColliderComponent*>::Iterator iter3 = colliders.begin();
 
 	//iterate through all colliders
-	for (; iter4 != colliders.end(); iter4++)
+	for (; iter3 != colliders.end(); iter3++)
 	{
-		poolPtr->removeObject("collider", iter4.m_node->value);
+		poolPtr->removeObject("collider", iter3.m_node->value);
 	}
 
+	colliders.clear();
 
-	LinkedList<RendererComponent*>::Iterator iter5 = renderers.begin();
+	LinkedList<RendererComponent*>::Iterator iter4 = renderers.begin();
 
 	//iterate through all renderers
-	for (; iter5 != renderers.end(); iter5++)
+	for (; iter4 != renderers.end(); iter4++)
 	{
-		poolPtr->removeObject("renderer", iter5.m_node->value);
+		poolPtr->removeObject("renderer", iter4.m_node->value);
 	}
+
+	renderers.clear();
+
+	scripts.clear();
 }
+

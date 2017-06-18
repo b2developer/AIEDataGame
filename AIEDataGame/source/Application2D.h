@@ -9,6 +9,11 @@
 
 #include "Pool.h"
 
+#include "Director.h"
+#include "Builder.h"
+#include "PlayerBuilder.h"
+#include "WallBuilder.h"
+
 #include "MathLibrary.h"
 #include "LinkedList.h"
 #include "GameState.h"
@@ -94,9 +99,6 @@ public:
 	*/
 	void draw();
 
-
-
-
 	aie::Renderer2D* m_renderer2D; //draws everything
 
 	//frame-rate limiters
@@ -111,6 +113,10 @@ public:
 	Vector2 m_screen = Vector2(0, 0); //dimensions of the screen
 
 	Pool* m_pool; //pool for all objects registered to it
+
+	Director* director; //controls builders
+	PlayerBuilder* playerBuilder; //builder that spawns players
+	WallBuilder* wallBuilder; //builder that spawns walls
 
 	LinkedList<GameState*> gameStateStack; //gamestate stack, contains game states layered on top of each other
 	LinkedList<GameState*> gameStateList; //global gamestate list, keeps all gamestates as static pointers
