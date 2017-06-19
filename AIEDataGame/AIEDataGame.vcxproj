@@ -153,6 +153,7 @@
     <ClCompile Include="source\FontResource.cpp" />
     <ClCompile Include="source\FunctionAction.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
+    <ClCompile Include="source\GridColliderComponent.cpp" />
     <ClCompile Include="source\Log.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\MenuState.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="source\FunctionAction.h" />
     <ClInclude Include="source\GameObject.h" />
     <ClInclude Include="source\GameState.h" />
+    <ClInclude Include="source\GridColliderComponent.h" />
     <ClInclude Include="source\Item.h" />
     <ClInclude Include="source\KeyList.h" />
     <ClInclude Include="source\LinkedGraph.h" />

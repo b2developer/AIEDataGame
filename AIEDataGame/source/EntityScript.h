@@ -4,6 +4,7 @@
 
 /*
 * class EntityScript
+* child class of ScriptComponent
 *
 * a component that serves as an abstract base for custom scripts
 * that serve purposes not covered by the core components (collider, renderer...)
@@ -19,13 +20,13 @@ public:
 	Vector2 gravity = Vector2(0, -1.8f); //acceleration of gravity per second
 
 	/*
-	* EntityScript
+	* EntityScript()
 	* default constructor
 	*/
 	EntityScript() {};
 
 	/*
-	* EntityScript
+	* ~EntityScript()
 	* virtual function
 	* default destructor
 	*/

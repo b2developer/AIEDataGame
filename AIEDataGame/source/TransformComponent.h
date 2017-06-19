@@ -5,6 +5,7 @@
 
 /*
 * class TransformComponent
+* child class of BaseComponent
 *
 * a component that holds a position
 *

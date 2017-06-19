@@ -48,13 +48,13 @@ private:
 	//hide the constructor and destructor
 
 	/*
-	* Factory
+	* Factory()
 	* default constructor
 	*/
 	Factory() {};
 
 	/*
-	* ~Factory
+	* ~Factory()
 	* default destructor
 	*/
 	~Factory() {}

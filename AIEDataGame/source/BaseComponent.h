@@ -27,13 +27,13 @@ public:
 	GameObject* parent = nullptr; //pointer to the holder of this component
 	
 	/*
-	* BaseComponent
+	* BaseComponent()
 	* default constructor
 	*/
 	BaseComponent() {};
 
 	/*
-	* BaseComponent
+	* ~BaseComponent()
 	* default destructor
 	*/
 	~BaseComponent() {};

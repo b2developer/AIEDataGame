@@ -25,13 +25,13 @@ public:
 	LinkedList<BaseComponent*> components;
 
 	/*
-	* GameObject
+	* GameObject()
 	* default constructor
 	*/
 	GameObject() {};
 
 	/*
-	* ~GameObject
+	* ~GameObject()
 	* default destructor
 	*/
 	~GameObject() {};

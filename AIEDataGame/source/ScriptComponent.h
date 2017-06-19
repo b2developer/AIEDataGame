@@ -7,6 +7,7 @@ class Application2D;
 
 /*
 * class ScriptComponent
+* child class of BaseComponent
 *
 * a component that serves as an abstract base for custom scripts
 * that serve purposes not covered by the core components (collider, renderer...)

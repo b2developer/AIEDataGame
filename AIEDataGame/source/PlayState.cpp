@@ -106,6 +106,23 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 				//did the collision test return positive
 				if (collTest.colliding)
 				{
+
+					Vector2 nMTV = collTest.MTV.normalised();
+
+					//tell the 1st gameobject about the collision
+					CollisionPair cp1;
+					cp1.other = iter2.m_node->value;
+					cp1.normal = nMTV;
+
+					iter1.m_node->value->collisions.pushBack(cp1);
+
+					//tell the 2nd gameobject about the collision
+					CollisionPair cp2; 
+					cp2.other = iter1.m_node->value;
+					cp2.normal = nMTV * -1.0f;
+
+					iter2.m_node->value->collisions.pushBack(cp2);
+
 					//seperate the objects
 					float ratio1 = iter1.m_node->value->mtvBias;
 					float ratio2 = iter2.m_node->value->mtvBias;
@@ -126,6 +143,69 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 				} 
 			}
 		}
+
+		//asdjhaskjdhasdhfljasdlkjfda
+		
+		LinkedList<GridColliderComponent*>::Iterator iter3 = grids.begin();
+
+		//iterate through all grid colliders, O(n^2)
+		for (; iter3 != grids.end(); iter3++)
+		{
+			AABB global1 = iter1.m_node->value->getGlobalAABB();
+
+			LinkedList<GridPair> pairs = iter3.m_node->value->getNeighbourColliders(global1);
+
+			LinkedList<GridPair>::Iterator pairIter = pairs.begin();
+
+			//iterate through all of the aabbs that are colliding
+			for (; pairIter != pairs.end(); pairIter++)
+			{
+				AABB global2 = iter2.m_node->value->getGlobalAABB();
+
+				Collision collTest = COLL_SOLVER->testCollision(global1, global2);
+
+				//did the collision test return positive
+				if (collTest.colliding)
+				{
+
+					Vector2 nMTV = collTest.MTV.normalised();
+
+					//tell the 1st gameobject about the collision
+					CollisionPair cp1;
+					cp1.other = iter2.m_node->value;
+					cp1.normal = nMTV;
+
+					iter1.m_node->value->collisions.pushBack(cp1);
+
+					//tell the 2nd gameobject about the collision
+					CollisionPair cp2;
+					cp2.other = iter1.m_node->value;
+					cp2.normal = nMTV * -1.0f;
+
+					iter2.m_node->value->collisions.pushBack(cp2);
+
+					//seperate the objects
+					float ratio1 = iter1.m_node->value->mtvBias;
+					float ratio2 = iter2.m_node->value->mtvBias;
+
+					float ratioSum = ratio1 + ratio2;
+
+					//test if the objects are both static
+					if (ratioSum > 0)
+					{
+						//get the ratio of the movement to distribute accross both colliders
+						float mtv1 = ratio1 / ratioSum;
+						float mtv2 = ratio2 / ratioSum;
+
+						//move the objects apart
+						iter1.m_node->value->parent->transform->position += collTest.MTV * mtv1;
+						iter2.m_node->value->parent->transform->position += collTest.MTV * -mtv2;
+					}
+				}
+			}
+		}
+
+
 	}
 
 }

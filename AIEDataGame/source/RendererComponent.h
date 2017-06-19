@@ -10,6 +10,7 @@ class Application2D;
 
 /*
 * class RendererComponent
+* child class of BaseComponent
 *
 * a component that holds a position
 *
@@ -25,13 +26,13 @@ public:
 	AABB region; //the region to render to
 
 	/*
-	* RendererComponent
+	* RendererComponent()
 	* default constructor
 	*/
 	RendererComponent() {};
 
 	/*
-	* RendererComponent
+	* ~RendererComponent()
 	* virtual function
 	* default destructor
 	*/
