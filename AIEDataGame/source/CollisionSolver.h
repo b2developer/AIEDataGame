@@ -33,6 +33,7 @@ struct Collision
 
 	bool colliding = false; //flag indicating if a collision occurred
 	Vector2 MTV = Vector2(0,0); //minimum movement required to sepearate the objects
+	int value = 0;
 };
 
 

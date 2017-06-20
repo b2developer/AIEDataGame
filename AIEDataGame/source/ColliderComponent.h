@@ -11,9 +11,8 @@ class ColliderComponent;
 //type for colliderss
 enum ColliderType
 {
-	NONE,
-	SOLID,
-	INVISIBLE,
+	NONE = 0,
+	SOLID = 1,
 };
 
 
@@ -30,6 +29,7 @@ struct CollisionTuple
 {
 	ColliderComponent* other; //the other collider component involved in the collision
 	Vector2 normal; //direction that the normal occurred in
+	ColliderType type; //type of collider that was collider with
 };
 
 
@@ -48,7 +48,9 @@ public:
 
 	LinkedNode<ColliderComponent*>* thisNode = nullptr; //position in the renderers array in playState
 
-	LinkedList<CollisionPair> collisions = LinkedList<CollisionPair>(0); //list of collisions
+	LinkedList<CollisionTuple> collisions = LinkedList<CollisionTuple>(0); //list of collisions
+
+	ColliderType type = ColliderType::SOLID; //the type of collider the component is
 
 	AABB region; //the shape of the collider
 	float mtvBias = 1.0f; //scores the amount of the push that the collider takes, 

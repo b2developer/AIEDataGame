@@ -36,6 +36,7 @@ bool Application2D::startup()
 	director = new Director();
 	playerBuilder = new PlayerBuilder();
 	wallBuilder = new WallBuilder();
+	levelBuilder = new LevelBuilder();
 
 	director->builder = playerBuilder;
 

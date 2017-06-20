@@ -24,8 +24,8 @@ int main()
 	//create the application
 	auto app2D = new Application2D();
 
-	app2D->setVSync(true);
-	app2D->run("AIEDataGame", 1280, 720, false);
+	app2D->setVSync(false);
+	app2D->run("AIEDataGame", 720, 720, false);
 
 	//delete the application
 	delete app2D;

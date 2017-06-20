@@ -47,6 +47,7 @@ void PlayState::onEnter(Application2D* appPtr)
 	appPtr->director->builder = appPtr->wallBuilder;
 
 	//instantiate the gameobject
+	/*
 	GameObject* wall = appPtr->director->buildGameObject(appPtr, this);
 	
 	transformList = wall->getComponentsOfType<TransformComponent>();
@@ -60,6 +61,45 @@ void PlayState::onEnter(Application2D* appPtr)
 
 	colliderList[0]->region = rendererList[0]->region;
 	colliderList[0]->mtvBias = 0.0f;
+
+	*/
+
+	appPtr->director->builder = appPtr->levelBuilder;
+
+	//instantiate the gameobject
+	GameObject* level = appPtr->director->buildGameObject(appPtr, this);
+
+	//----------------- BEGIN SHITTY INITIALISATION -----------------------
+	LinkedList<GridColliderComponent*> gcList = level->getComponentsOfType<GridColliderComponent>();
+
+	gcList[0]->sizeX = 10;
+	gcList[0]->sizeY = 3;
+
+	gcList[0]->mtvBias = 0.0f;
+	gcList[0]->region = AABB(Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f));
+
+	gcList[0]->data = new ColliderType*[3];
+
+	gcList[0]->data[2] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
+	gcList[0]->data[1] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
+	gcList[0]->data[0] = new ColliderType[10]{ (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)3,  (ColliderType)3,  (ColliderType)2,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1 };
+
+	LinkedList<GridRendererComponent*> grList = level->getComponentsOfType<GridRendererComponent>();
+
+	grList[0]->sizeX = 10;
+	grList[0]->sizeY = 3;
+
+	grList[0]->singularRegion = AABB(Vector2(0.0f, 0.0f), Vector2(16.0f, 16.0f));
+	grList[0]->renderRegion = AABB(Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f));
+
+	grList[0]->atlasRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "level_atlas.png");
+
+	grList[0]->data = new TileType*[3];
+
+	grList[0]->data[0] = new TileType[10]{ (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0 };
+	grList[0]->data[1] = new TileType[10]{ (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0 };
+	grList[0]->data[2] = new TileType[10]{ (TileType)1,  (TileType)1,  (TileType)1,  (TileType)1,  (TileType)3,  (TileType)3,  (TileType)2,  (TileType)1,  (TileType)1,  (TileType)1 };
+	//----------------- END SHITTY INITIALISATION -----------------------
 
 }
 
@@ -86,6 +126,22 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 {
 	LinkedList<ColliderComponent*>::Iterator iter1 = colliders.begin();
 
+	//remove all prior collisions
+	for (; iter1 != colliders.end(); iter1++)
+	{
+		iter1.m_node->value->collisions.clear();
+	}
+
+	LinkedList<GridColliderComponent*>::Iterator iter3 = gridColliders.begin();
+
+	//remove all prior collisions from the grid
+	for (; iter3 != gridColliders.end(); iter3++)
+	{
+		iter3.m_node->value->collisions.clear();
+	}
+
+	iter1 = colliders.begin();
+
 	//iterate through all colliders
 	for (; iter1 != colliders.end(); iter1++)
 	{
@@ -110,16 +166,18 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 					Vector2 nMTV = collTest.MTV.normalised();
 
 					//tell the 1st gameobject about the collision
-					CollisionPair cp1;
+					CollisionTuple cp1;
 					cp1.other = iter2.m_node->value;
 					cp1.normal = nMTV;
+					cp1.type = iter2.m_node->value->type;
 
 					iter1.m_node->value->collisions.pushBack(cp1);
 
 					//tell the 2nd gameobject about the collision
-					CollisionPair cp2; 
+					CollisionTuple cp2;
 					cp2.other = iter1.m_node->value;
 					cp2.normal = nMTV * -1.0f;
+					cp2.type = iter1.m_node->value->type;
 
 					iter2.m_node->value->collisions.pushBack(cp2);
 
@@ -143,13 +201,11 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 				} 
 			}
 		}
-
-		//asdjhaskjdhasdhfljasdlkjfda
 		
-		LinkedList<GridColliderComponent*>::Iterator iter3 = grids.begin();
+		iter3 = gridColliders.begin();
 
 		//iterate through all grid colliders, O(n^2)
-		for (; iter3 != grids.end(); iter3++)
+		for (; iter3 != gridColliders.end(); iter3++)
 		{
 			AABB global1 = iter1.m_node->value->getGlobalAABB();
 
@@ -160,7 +216,8 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 			//iterate through all of the aabbs that are colliding
 			for (; pairIter != pairs.end(); pairIter++)
 			{
-				AABB global2 = iter2.m_node->value->getGlobalAABB();
+			
+				AABB global2 = pairIter.m_node->value.region;
 
 				Collision collTest = COLL_SOLVER->testCollision(global1, global2);
 
@@ -171,22 +228,22 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 					Vector2 nMTV = collTest.MTV.normalised();
 
 					//tell the 1st gameobject about the collision
-					CollisionPair cp1;
-					cp1.other = iter2.m_node->value;
+					CollisionTuple cp1;
+					cp1.other = iter3.m_node->value;
 					cp1.normal = nMTV;
 
 					iter1.m_node->value->collisions.pushBack(cp1);
 
 					//tell the 2nd gameobject about the collision
-					CollisionPair cp2;
+					CollisionTuple cp2;
 					cp2.other = iter1.m_node->value;
 					cp2.normal = nMTV * -1.0f;
 
-					iter2.m_node->value->collisions.pushBack(cp2);
+					iter3.m_node->value->collisions.pushBack(cp2);
 
 					//seperate the objects
 					float ratio1 = iter1.m_node->value->mtvBias;
-					float ratio2 = iter2.m_node->value->mtvBias;
+					float ratio2 = iter3.m_node->value->mtvBias;
 
 					float ratioSum = ratio1 + ratio2;
 
@@ -199,7 +256,7 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 
 						//move the objects apart
 						iter1.m_node->value->parent->transform->position += collTest.MTV * mtv1;
-						iter2.m_node->value->parent->transform->position += collTest.MTV * -mtv2;
+						iter3.m_node->value->parent->transform->position += collTest.MTV * -mtv2;
 					}
 				}
 			}
@@ -213,12 +270,20 @@ void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 //renders all game objects
 void PlayState::updateRenderers(Application2D* appPtr)
 {
-	LinkedList<RendererComponent*>::Iterator iter = renderers.begin();
+	LinkedList<GridRendererComponent*>::Iterator iter = gridRenderers.begin();
 
-	//iterate through all renderers
-	for (; iter != renderers.end(); iter++)
+	//iterate through all grid renderers
+	for (; iter != gridRenderers.end(); iter++)
 	{
 		iter.m_node->value->render(appPtr);
+	}
+
+	LinkedList<RendererComponent*>::Iterator iter2 = renderers.begin();
+
+	//iterate through all renderers
+	for (; iter2 != renderers.end(); iter2++)
+	{
+		iter2.m_node->value->render(appPtr);
 	}
 
 }
@@ -278,6 +343,26 @@ void PlayState::cleanUp()
 	}
 
 	renderers.clear();
+
+	LinkedList<GridColliderComponent*>::Iterator iter5 = gridColliders.begin();
+
+	//iterate through all grids
+	for (; iter5 != gridColliders.end(); iter5++)
+	{
+		delete iter5.m_node->value;
+	}
+
+	gridColliders.clear();
+
+	LinkedList<GridRendererComponent*>::Iterator iter6 = gridRenderers.begin();
+
+	//iterate through all grids
+	for (; iter6 != gridRenderers.end(); iter6++)
+	{
+		delete iter6.m_node->value;
+	}
+
+	gridRenderers.clear();
 
 	scripts.clear();
 }

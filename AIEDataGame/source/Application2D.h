@@ -13,6 +13,7 @@
 #include "Builder.h"
 #include "PlayerBuilder.h"
 #include "WallBuilder.h"
+#include "LevelBuilder.h"
 
 #include "MathLibrary.h"
 #include "LinkedList.h"
@@ -117,6 +118,8 @@ public:
 	Director* director; //controls builders
 	PlayerBuilder* playerBuilder; //builder that spawns players
 	WallBuilder* wallBuilder; //builder that spawns walls
+	LevelBuilder* levelBuilder; //builder that spawns level grids
+
 
 	LinkedList<GameState*> gameStateStack; //gamestate stack, contains game states layered on top of each other
 	LinkedList<GameState*> gameStateList; //global gamestate list, keeps all gamestates as static pointers

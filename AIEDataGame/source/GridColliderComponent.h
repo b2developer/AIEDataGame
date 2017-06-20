@@ -1,7 +1,7 @@
 #pragma once
 #include "ColliderComponent.h"
 
-typedef int** int2D;
+typedef ColliderType** map;
 
 //forward declaration
 class Application2D;
@@ -16,7 +16,7 @@ class Application2D;
 struct GridPair
 {
 	AABB region; //the region that this part of the grid surrounds
-	int data; //the number written at the grid pair
+	ColliderType data; //the number written at the grid pair
 };
 
 
@@ -35,13 +35,11 @@ public:
 
 	LinkedNode<GridColliderComponent*>* thisNode = nullptr; //position in the renderers array in playState
 
-	AABB region; //the shape of the collider that makes up the array
-
 	//dimensions of the 2D array
 	int sizeY = 0;
 	int sizeX = 0;
 
-	int2D data; //2D array of data
+	map data; //2D array of data
 
 	/*
 	* GridColliderComponent()
@@ -54,7 +52,7 @@ public:
 	* virtual function
 	* default destructor
 	*/
-	virtual ~GridColliderComponent() {};
+	~GridColliderComponent() {};
 
 	/*
 	* initialise

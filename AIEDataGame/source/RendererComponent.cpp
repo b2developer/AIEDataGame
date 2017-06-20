@@ -14,7 +14,7 @@ void RendererComponent::render(Application2D * appPtr)
 
 	AABB global = getGlobalAABB();
 
-	appPtr->m_renderer2D->drawSprite(textureRes->texture, global.min_.x * appPtr->m_screen.x, global.min_.y * appPtr->m_screen.y, length.x * appPtr->m_screen.x, length.y * appPtr->m_screen.y, 0.0f, 1.0f, 0, 0);
+	appPtr->m_renderer2D->drawSprite(textureRes->texture, global.min_.x * appPtr->m_screen.x, global.min_.y * appPtr->m_screen.y, length.x * appPtr->m_screen.x, length.y * appPtr->m_screen.y, 0.0f, 1.0f, 0.0f, 0.0f);
 }
 
 //gets the space occupied by the renderer's region

@@ -10,7 +10,7 @@ LinkedList<GridPair> GridColliderComponent::getNeighbourColliders(AABB otherRegi
 	Vector2 offset = region.min_; //get the offset from the origin of the entire grid
 	Vector2 size = region.max_ - region.min_; //get the size of one of the squares in the grid
 
-	AABB relRegion = AABB();
+	AABB relRegion = otherRegion;
 
 	//get the region relative to the bottom-left corner
 	relRegion.min_ += offset * -1.0f;
@@ -26,20 +26,25 @@ LinkedList<GridPair> GridColliderComponent::getNeighbourColliders(AABB otherRegi
 	AABB iterRegion = relRegion;
 
 	//clamp the minumum iterator values to above 0
-	iterRegion.min_.x = iterRegion.min_.x < 0 ? 0 : iterRegion.min_.x;
+	iterRegion.min_.x = iterRegion.min_.x < 0 ? 0 : iterRegion.min_.x; 
 	iterRegion.min_.y = iterRegion.min_.y < 0 ? 0 : iterRegion.min_.y;
 	
 	//clamp the maximum iterator values to below the maximum size
-	iterRegion.max_.x = iterRegion.max_.x >= sizeX ? sizeX- 1 : iterRegion.max_.x;
-	iterRegion.max_.y = iterRegion.max_.y >= sizeY ? sizeY - 1 : iterRegion.max_.y;
+	iterRegion.max_.x = iterRegion.max_.x >= sizeX - 1 ? sizeX - 1 : iterRegion.max_.x;
+	iterRegion.max_.y = iterRegion.max_.y >= sizeY - 1 ? sizeY - 1 : iterRegion.max_.y;
 
 	LinkedList<GridPair> gridList = LinkedList<GridPair>(0);
 
 	//2D array iterator
-	for (int y = (int)floorf(iterRegion.min_.y); y < (int)ceilf(iterRegion.max_.y); y++)
+	for (int y = (int)floorf(iterRegion.min_.y); y <= (int)ceilf(iterRegion.max_.y); y++)
 	{
-		for (int x = (int)floorf(iterRegion.min_.x); x < (int)ceilf(iterRegion.max_.x); x++)
+		for (int x = (int)floorf(iterRegion.min_.x); x <= (int)ceilf(iterRegion.max_.x); x++)
 		{
+			if (data[y][x] == ColliderType::NONE)
+			{
+				continue;
+			}
+
 			//get the actual region contained by the sub-region
 			GridPair gridPair = GridPair();
 

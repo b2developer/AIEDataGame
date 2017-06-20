@@ -12,6 +12,7 @@
 #include "ColliderComponent.h"
 #include "RendererComponent.h"
 #include "GridColliderComponent.h"
+#include "GridRendererComponent.h"
 
 //type for objects that the playstate stores pointers to
 enum class ObjectType
@@ -45,7 +46,8 @@ public:
 	LinkedList<ScriptComponent*> scripts = LinkedList<ScriptComponent*>(0);
 	LinkedList<ColliderComponent*> colliders = LinkedList<ColliderComponent*>(0);
 	LinkedList<RendererComponent*> renderers = LinkedList<RendererComponent*>(0);
-	LinkedList<GridColliderComponent*> grids = LinkedList<GridColliderComponent*>(0);
+	LinkedList<GridColliderComponent*> gridColliders = LinkedList<GridColliderComponent*>(0);
+	LinkedList<GridRendererComponent*> gridRenderers = LinkedList<GridRendererComponent*>(0);
 
 	/*
 	* PlayState()
