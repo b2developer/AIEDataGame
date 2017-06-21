@@ -47,7 +47,7 @@ void PlayState::onEnter(Application2D* appPtr)
 	appPtr->director->builder = appPtr->wallBuilder;
 
 	//instantiate the gameobject
-	/*
+	
 	GameObject* wall = appPtr->director->buildGameObject(appPtr, this);
 	
 	transformList = wall->getComponentsOfType<TransformComponent>();
@@ -62,7 +62,6 @@ void PlayState::onEnter(Application2D* appPtr)
 	colliderList[0]->region = rendererList[0]->region;
 	colliderList[0]->mtvBias = 0.0f;
 
-	*/
 
 	appPtr->director->builder = appPtr->levelBuilder;
 
@@ -80,9 +79,9 @@ void PlayState::onEnter(Application2D* appPtr)
 
 	gcList[0]->data = new ColliderType*[3];
 
-	gcList[0]->data[2] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
+	gcList[0]->data[0] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
 	gcList[0]->data[1] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
-	gcList[0]->data[0] = new ColliderType[10]{ (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)3,  (ColliderType)3,  (ColliderType)2,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1 };
+	gcList[0]->data[2] = new ColliderType[10]{ (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)3,  (ColliderType)3,  (ColliderType)2,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1 };
 
 	LinkedList<GridRendererComponent*> grList = level->getComponentsOfType<GridRendererComponent>();
 
@@ -96,7 +95,7 @@ void PlayState::onEnter(Application2D* appPtr)
 
 	grList[0]->data = new TileType*[3];
 
-	grList[0]->data[0] = new TileType[10]{ (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0 };
+	grList[0]->data[0] = new TileType[10]{ (TileType)0,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0 };
 	grList[0]->data[1] = new TileType[10]{ (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0 };
 	grList[0]->data[2] = new TileType[10]{ (TileType)1,  (TileType)1,  (TileType)1,  (TileType)1,  (TileType)3,  (TileType)3,  (TileType)2,  (TileType)1,  (TileType)1,  (TileType)1 };
 	//----------------- END SHITTY INITIALISATION -----------------------
@@ -121,7 +120,7 @@ void PlayState::updateScripts(Application2D* appPtr, float deltaTime)
 	}
 }
 
-//tests for collisions
+//tests for collisions against colliders and grid colliders
 void PlayState::updateColliders(Application2D* appPtr, float deltaTime)
 {
 	LinkedList<ColliderComponent*>::Iterator iter1 = colliders.begin();
@@ -275,7 +274,7 @@ void PlayState::updateRenderers(Application2D* appPtr)
 	//iterate through all grid renderers
 	for (; iter != gridRenderers.end(); iter++)
 	{
-		iter.m_node->value->render(appPtr);
+		iter.m_node->value->render(appPtr, cameraOverride);
 	}
 
 	LinkedList<RendererComponent*>::Iterator iter2 = renderers.begin();
@@ -283,7 +282,7 @@ void PlayState::updateRenderers(Application2D* appPtr)
 	//iterate through all renderers
 	for (; iter2 != renderers.end(); iter2++)
 	{
-		iter2.m_node->value->render(appPtr);
+		iter2.m_node->value->render(appPtr, cameraOverride);
 	}
 
 }

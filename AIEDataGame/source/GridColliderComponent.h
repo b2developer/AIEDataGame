@@ -1,5 +1,6 @@
 #pragma once
 #include "ColliderComponent.h"
+#include "TextFileResource.h"
 
 typedef ColliderType** map;
 
@@ -40,6 +41,8 @@ public:
 	int sizeX = 0;
 
 	map data; //2D array of data
+
+	
 
 	/*
 	* GridColliderComponent()

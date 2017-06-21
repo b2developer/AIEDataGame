@@ -157,6 +157,8 @@ bool Application2D::startup()
 		sprite->hitbox.max_ = Vector2(0.43f, 0.59f);
 		sprite->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
 
+		TextFileResource* tf = (TextFileResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTFILE, "text/level1colls.txt");
+
 		splash->items.pushBack(splashTimer);
 		splash->items.pushBack(splashText);
 
@@ -269,9 +271,9 @@ void Application2D::update(float deltaTime)
 void Application2D::draw()
 {
 	clearScreen();
-
+	
 	m_renderer2D->setRenderColour(1, 1, 1);
-	m_renderer2D->setCameraPos(m_camera.x, m_camera.y);
+	m_renderer2D->setCameraPos(0.0f, 0.0f);
 	m_renderer2D->begin();
 
 	//check that there is still gamestates left in the stack
@@ -279,12 +281,16 @@ void Application2D::draw()
 	{
 		for (unsigned int i = 0; i < gameStateStack.size; i++)
 		{
-			//draw the gamestate
-			gameStateStack[i]->draw(this);
-
+		
 			//don't continue rendering
 			if (gameStateStack[i]->isFinalDraw)
 			{
+				for (int j = (int)i; j >= 0; j--)
+				{
+					//draw the gamestate
+					gameStateStack[j]->draw(this);
+				}
+
 				break;
 			}
 		}

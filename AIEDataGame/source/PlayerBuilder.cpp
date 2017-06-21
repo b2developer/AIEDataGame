@@ -2,7 +2,7 @@
 #include "Factory.h"
 #include "PlayState.h"
 #include "Application2D.h"
-#include "EntityScript.h"
+#include "PlayerScript.h"
 
 //sets gameObject related variables
 void PlayerBuilder::setObject(Application2D * appPtr, PlayState * playState, GameObject * gameObject)
@@ -25,7 +25,16 @@ void PlayerBuilder::setTransform(Application2D * appPtr, PlayState * playState, 
 //sets script component variables
 void PlayerBuilder::setScript(Application2D * appPtr, PlayState * playState, GameObject * gameObject)
 {
-	ScriptComponent* entity = FACT->createObject<EntityScript>();
+	ScriptComponent* entity = FACT->createObject<PlayerScript>();
+
+	((PlayerScript*)entity)->camera = &playState->cameraOverride; //give the player a pointer to the vector that controls the camera
+
+	//give the player the statistics of maximum speed, acceleration and friction
+	((PlayerScript*)entity)->run = MovementState(2.0f, 0.0f, 0.92f); //give the player run statistics
+	((PlayerScript*)entity)->air = MovementState(1.0f, 0.0f, 0.95f); //give the player air statistics
+	((PlayerScript*)entity)->jumpPower = 0.7f; //give the player the jump power
+
+
 	gameObject->components.pushBack(entity); //add the polymoprhic script component to the gameobject
 	playState->scripts.pushBack(entity);
 	entity->thisNode = playState->scripts.endNode();

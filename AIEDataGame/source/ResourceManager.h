@@ -3,6 +3,7 @@
 #include "Resource.h"
 #include "TextureResource.h"
 #include "FontResource.h"
+#include "TextFileResource.h"
 
 #define RESOURCE_MAN ResourceManager::getInstance()
 

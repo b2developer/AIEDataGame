@@ -8,11 +8,14 @@ void RendererComponent::initialise()
 }
 
 //draws the texture
-void RendererComponent::render(Application2D * appPtr)
+void RendererComponent::render(Application2D * appPtr, Vector2 cameraOffset)
 {
 	Vector2 length = region.max_ - region.min_;
 
 	AABB global = getGlobalAABB();
+
+	global.min_ += cameraOffset * -1.0f;
+	global.max_ += cameraOffset * -1.0f;
 
 	appPtr->m_renderer2D->drawSprite(textureRes->texture, global.min_.x * appPtr->m_screen.x, global.min_.y * appPtr->m_screen.y, length.x * appPtr->m_screen.x, length.y * appPtr->m_screen.y, 0.0f, 1.0f, 0.0f, 0.0f);
 }

@@ -40,7 +40,7 @@ LinkedList<GridPair> GridColliderComponent::getNeighbourColliders(AABB otherRegi
 	{
 		for (int x = (int)floorf(iterRegion.min_.x); x <= (int)ceilf(iterRegion.max_.x); x++)
 		{
-			if (data[y][x] == ColliderType::NONE)
+			if (data[sizeY - y - 1][x] == ColliderType::NONE)
 			{
 				continue;
 			}
@@ -54,7 +54,7 @@ LinkedList<GridPair> GridColliderComponent::getNeighbourColliders(AABB otherRegi
 			subRegion.max_ = offset + Vector2(size.x * x, size.y * y) + size;
 
 			gridPair.region = subRegion;
-			gridPair.data = data[y][x];
+			gridPair.data = data[sizeY - y - 1][x];
 
 			gridList.pushBack(gridPair);
 		}

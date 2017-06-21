@@ -8,12 +8,12 @@ void GridRendererComponent::initialise()
 }
 
 //renders the entire grid
-void GridRendererComponent::render(Application2D* appPtr)
+void GridRendererComponent::render(Application2D* appPtr, Vector2 cameraOffset)
 {
 	
 	Vector2 length = singularRegion.max_ - singularRegion.min_;
 	Vector2 renderLength = renderRegion.max_ - renderRegion.min_;
-	Vector2 full = Vector2(atlasRes->texture->getWidth(), atlasRes->texture->getHeight());
+	Vector2 full = Vector2((float)atlasRes->texture->getWidth(), (float)atlasRes->texture->getHeight());
 
 	for (int i = 0; i < sizeY; i++)
 	{
@@ -39,8 +39,8 @@ void GridRendererComponent::render(Application2D* appPtr)
 
 			AABB trueRegion = AABB();
 
-			trueRegion.min_ = parent->transform->position + Vector2(renderLength.x * j, renderLength.y * (sizeY - i - 1));
-			trueRegion.max_ = parent->transform->position + Vector2(renderLength.x * j, renderLength.y * (sizeY - i - 1)) + renderLength;
+			trueRegion.min_ = parent->transform->position + Vector2(renderLength.x * j, renderLength.y * (sizeY - i - 1)) - cameraOffset;
+			trueRegion.max_ = parent->transform->position + Vector2(renderLength.x * j, renderLength.y * (sizeY - i - 1)) + renderLength - cameraOffset;
 
 			//set the rect to the correct coordinates to render the block
 			appPtr->m_renderer2D->setUVRect(U + uvEpsilon, V + uvEpsilon, 1 / ratioX - uvEpsilon * 2.0f, 1 / ratioY - uvEpsilon * 2.0f);

@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector2.h"
 
 //forward decleration
 class Application2D;
@@ -18,6 +19,8 @@ public:
 	bool firstFrame = false; //don't allow the gamestate to immediately take updates as soon as it's added
 	bool isFinalUpdate = true; //indicates if this state is the final state to update
 	bool isFinalDraw = true; //indicates if this state is the final state to draw
+
+	Vector2 cameraOverride = Vector2(0, 0); //the position that the camera should be at when drawing this state
 
 	/*
 	* GameState

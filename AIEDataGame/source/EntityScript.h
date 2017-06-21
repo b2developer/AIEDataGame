@@ -1,13 +1,14 @@
 #pragma once
 #include "ScriptComponent.h"
+#include "ColliderComponent.h"
 #include "Vector2.h"
 
 /*
 * class EntityScript
 * child class of ScriptComponent
 *
-* a component that serves as an abstract base for custom scripts
-* that serve purposes not covered by the core components (collider, renderer...)
+* a component that gives a gameobject realtime movement
+* capabilities, with the ability to change these movements
 *
 * author: Bradley Booth, Academy of Interactive Entertainment, 2017
 */
@@ -16,6 +17,7 @@ class EntityScript : public ScriptComponent
 
 public:
 
+	ColliderComponent* collider = nullptr; //pointer to the collider to get collisions from
 	Vector2 velocity = Vector2(0,0); //movement in units per second
 	Vector2 gravity = Vector2(0, -1.8f); //acceleration of gravity per second
 
@@ -27,7 +29,6 @@ public:
 
 	/*
 	* ~EntityScript()
-	* virtual function
 	* default destructor
 	*/
 	~EntityScript() {};
@@ -46,7 +47,7 @@ public:
 	* start
 	* overrides ScriptComponent's update(Application2D* appPtr, float deltaTime)
 	*
-	* runs once when the object is created
+	* runs once per frame
 	*
 	* @param Application2D* appPtr - pointer to the application that called it
 	* @param float deltaTime - the amount of time passed since the last frame

@@ -7,48 +7,23 @@
 //initialises the script, runs once
 void EntityScript::initialise()
 {
-
+	collider = parent->getComponentsOfType<ColliderComponent>()[0];
 }
 
 //called every frame
 void EntityScript::update(Application2D * appPtr, float deltaTime)
 {
-	bool grounded = false;
-
-	LinkedList<ColliderComponent*> colls = parent->getComponentsOfType<ColliderComponent>();
 
 	velocity += gravity * deltaTime; //apply gravity
 
-	aie::Input* input = aie::Input::getInstance();
-
-	if (input->isKeyDown(aie::INPUT_KEY_A))
-	{
-		velocity.x -= 1.5f * deltaTime;
-	}
-
-	if (input->isKeyDown(aie::INPUT_KEY_D))
-	{
-		velocity.x += 1.5f * deltaTime;
-	}
-
-	velocity.x *= 0.95f;
-
 	//iterate through all collisions
-	for (int i = 0; i < colls[0]->collisions.size; i++)
+	for (int i = 0; i < (int)collider->collisions.size; i++)
 	{
-		if ((colls[0]->collisions[i].normal - Vector2(0,1)).sqrMagnitude() < 0.0001f)
-		{
-			grounded = true;
-		}
+		float nDot = -velocity.dot(collider->collisions[i].normal);
 
-		velocity += colls[0]->collisions[i].normal * -velocity.dot(colls[0]->collisions[i].normal);
-	}
-
-	if (input->isKeyDown(aie::INPUT_KEY_W))
-	{
-		if (grounded)
+		if (nDot > 0)
 		{
-			velocity.y = 0.7f;
+			velocity += collider->collisions[i].normal * nDot;
 		}
 	}
 

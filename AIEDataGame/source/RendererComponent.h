@@ -54,9 +54,10 @@ public:
 	* draws the texture to the screen
 	*
 	* @param Application2D* appPtr - pointer to the application that will render it
+	* @param Vector2 cameraOffset - offset from the origin to draw the texture from in addition to transforms
 	* @returns void
 	*/
-	void render(Application2D* appPtr);
+	void render(Application2D* appPtr, Vector2 cameraOffset);
 
 	/*
 	* getGlobalAABB

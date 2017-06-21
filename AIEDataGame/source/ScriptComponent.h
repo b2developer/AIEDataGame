@@ -50,7 +50,7 @@ public:
 	* virtual function
 	* overrides BaseComponent's update(Application2D* appPtr, float deltaTime)
 	*
-	* runs once when the object is created
+	* runs once per frame
 	*
 	* @param Application2D* appPtr - pointer to the application that called it
 	* @param float deltaTime - the amount of time passed since the last frame

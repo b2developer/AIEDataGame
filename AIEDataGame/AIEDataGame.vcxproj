@@ -160,6 +160,7 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\MenuState.cpp" />
     <ClCompile Include="source\PlayerBuilder.cpp" />
+    <ClCompile Include="source\PlayerScript.cpp" />
     <ClCompile Include="source\PlayState.cpp" />
     <ClCompile Include="source\Pool.cpp" />
     <ClCompile Include="source\PopAction.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="source\ResourceManager.cpp" />
     <ClCompile Include="source\Sprite.cpp" />
     <ClCompile Include="source\Text.cpp" />
+    <ClCompile Include="source\TextFileResource.cpp" />
     <ClCompile Include="source\TextureResource.cpp" />
     <ClCompile Include="source\TickBox.cpp" />
     <ClCompile Include="source\Timer.cpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="source\MathLibrary.h" />
     <ClInclude Include="source\MenuState.h" />
     <ClInclude Include="source\PlayerBuilder.h" />
+    <ClInclude Include="source\PlayerScript.h" />
     <ClInclude Include="source\PlayState.h" />
     <ClInclude Include="source\Pool.h" />
     <ClInclude Include="source\ScriptComponent.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="source\ResourceManager.h" />
     <ClInclude Include="source\Sprite.h" />
     <ClInclude Include="source\Text.h" />
+    <ClInclude Include="source\TextFileResource.h" />
     <ClInclude Include="source\TextureResource.h" />
     <ClInclude Include="source\TickBox.h" />
     <ClInclude Include="source\Timer.h" />
@@ -226,6 +230,10 @@
     <ProjectReference Include="..\AIEMathsLibrary\AIEMathsLibrary.vcxproj">
       <Project>{7ac66ba4-5a65-4cd0-8849-a78740e7cfaa}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\bin\resource\text\level1colls.txt" />
+    <Text Include="..\bin\resource\text\level1visuals.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

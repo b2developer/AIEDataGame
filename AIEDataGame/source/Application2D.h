@@ -110,7 +110,6 @@ public:
 	bool PREV_MOUSE_0_STATE = false;
 	bool PREV_MOUSE_1_STATE = false;
 
-	Vector2 m_camera = Vector2(0, 0); //position of the renderer
 	Vector2 m_screen = Vector2(0, 0); //dimensions of the screen
 
 	Pool* m_pool; //pool for all objects registered to it
