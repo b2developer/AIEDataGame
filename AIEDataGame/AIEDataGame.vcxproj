@@ -233,7 +233,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\bin\resource\text\level1colls.txt" />
-    <Text Include="..\bin\resource\text\level1visuals.txt" />
+    <Text Include="..\bin\resource\text\level1tiles.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

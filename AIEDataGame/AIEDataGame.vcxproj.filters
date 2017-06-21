@@ -313,7 +313,7 @@
     <Text Include="..\bin\resource\text\level1colls.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="..\bin\resource\text\level1visuals.txt">
+    <Text Include="..\bin\resource\text\level1tiles.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

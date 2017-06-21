@@ -7,6 +7,35 @@ void GridRendererComponent::initialise()
 
 }
 
+//populates the 2D array with loaded text-file data
+void GridRendererComponent::load()
+{
+	int i = 0; //iterating through the full c-string
+	int j = 0; //remembering the lettter that last contained a new line
+	char s = textRes->stream[i]; //current character of the full c-string
+
+	char builder[MAX_FILE];
+
+	//search through the text file c-string
+	while (s != '\0')
+	{
+		s = textRes->stream[i];
+
+		if (s == ',' || s == '\n')
+		{
+			//copy the sub-string at j to the builder
+			strcpy_s(builder, textRes->stream + j);
+
+			builder[i - j] = '\0';
+
+			j = i + 1;
+
+		}
+
+		i++;
+	}
+}
+
 //renders the entire grid
 void GridRendererComponent::render(Application2D* appPtr, Vector2 cameraOffset)
 {

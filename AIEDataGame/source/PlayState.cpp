@@ -77,11 +77,9 @@ void PlayState::onEnter(Application2D* appPtr)
 	gcList[0]->mtvBias = 0.0f;
 	gcList[0]->region = AABB(Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f));
 
-	gcList[0]->data = new ColliderType*[3];
+	gcList[0]->textRes = (TextFileResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTFILE, "text/level1colls.txt");
 
-	gcList[0]->data[0] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
-	gcList[0]->data[1] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
-	gcList[0]->data[2] = new ColliderType[10]{ (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)3,  (ColliderType)3,  (ColliderType)2,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1 };
+	gcList[0]->load();
 
 	LinkedList<GridRendererComponent*> grList = level->getComponentsOfType<GridRendererComponent>();
 
@@ -93,11 +91,6 @@ void PlayState::onEnter(Application2D* appPtr)
 
 	grList[0]->atlasRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "level_atlas.png");
 
-	grList[0]->data = new TileType*[3];
-
-	grList[0]->data[0] = new TileType[10]{ (TileType)0,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0 };
-	grList[0]->data[1] = new TileType[10]{ (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0 };
-	grList[0]->data[2] = new TileType[10]{ (TileType)1,  (TileType)1,  (TileType)1,  (TileType)1,  (TileType)3,  (TileType)3,  (TileType)2,  (TileType)1,  (TileType)1,  (TileType)1 };
 	//----------------- END SHITTY INITIALISATION -----------------------
 
 }

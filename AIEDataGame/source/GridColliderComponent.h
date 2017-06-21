@@ -42,7 +42,7 @@ public:
 
 	map data; //2D array of data
 
-	
+	TextFileResource* textRes; //pointer to the 2D array data from the text file
 
 	/*
 	* GridColliderComponent()
@@ -66,6 +66,16 @@ public:
 	* @returns void
 	*/
 	void initialise() override;
+
+	/*
+	* load
+	* 
+	* loads in the array data, setting up the grid
+	* collider for use detecting collisions in a game
+	*
+	* @returns void
+	*/
+	void load();
 
 	/*
 	* getNeighbourColliders

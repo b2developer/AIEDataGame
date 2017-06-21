@@ -43,6 +43,8 @@ public:
 
 	tileMap data; //2D array of data
 
+	TextFileResource* textRes; //pointer to the 2D array data from the text file
+
 	/*
 	* GridRendererComponent()
 	* default constructor
@@ -65,6 +67,16 @@ public:
 	* @returns void
 	*/
 	void initialise() override;
+	
+	/*
+	* load
+	*
+	* loads in the array data, setting up the grid
+	* renderer for use rendering tiles in a game
+	*
+	* @returns void
+	*/
+	void load();
 
 	/*
 	* render

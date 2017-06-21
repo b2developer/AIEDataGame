@@ -157,8 +157,6 @@ bool Application2D::startup()
 		sprite->hitbox.max_ = Vector2(0.43f, 0.59f);
 		sprite->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
 
-		TextFileResource* tf = (TextFileResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTFILE, "text/level1colls.txt");
-
 		splash->items.pushBack(splashTimer);
 		splash->items.pushBack(splashText);
 
