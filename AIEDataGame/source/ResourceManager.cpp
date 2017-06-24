@@ -83,7 +83,7 @@ Resource * ResourceManager::requestResource(ResourceType resourceType, char file
 //frees the resource if there are no longer any users of it
 void ResourceManager::releaseResource(char fileName[MAX_PATH])
 {
-	ResourceReference * resourcePtr = *loadedContainer.searchFor(fileName);
+	ResourceReference ** resourcePtr = loadedContainer.searchFor(fileName);
 
 	//check if the resource has been loaded yet
 	if (resourcePtr == nullptr)
@@ -92,12 +92,12 @@ void ResourceManager::releaseResource(char fileName[MAX_PATH])
 	}
 	else
 	{
-		resourcePtr->resourceCount--;
+		(*resourcePtr)->resourceCount--;
 
 		//release the resource if the resource count falls to 0
-		if (resourcePtr->resourceCount == 0)
+		if ((*resourcePtr)->resourceCount == 0)
 		{
-			delete resourcePtr;
+			(*resourcePtr)->resource->releaseResource();
 			loadedContainer.remove(fileName);
 		}
 		

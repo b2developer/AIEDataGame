@@ -2,6 +2,13 @@
 #include "Application2D.h"
 #include "CollisionSolver.h"
 
+//destructor, releases resources
+TickBox::~TickBox()
+{
+	RESOURCE_MAN->releaseResource(falseTexture->resourceName);
+	RESOURCE_MAN->releaseResource(trueTexture->resourceName);
+}
+
 //simulates one frame of the tick box
 void TickBox::update(Application2D* appPtr, float deltaTime)
 {

@@ -1,6 +1,12 @@
 #include "Text.h"
 #include "Application2D.h"
 
+//destructor, releases resources
+Text::~Text()
+{
+	RESOURCE_MAN->releaseResource(font->resourceName);
+}
+
 //renders the text
 void Text::draw(Application2D * appPtr)
 {

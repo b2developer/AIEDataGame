@@ -4,8 +4,7 @@
 //destructor
 RendererComponent::~RendererComponent()
 {
-	//release the resource
-	RESOURCE_MAN->releaseResource(textureRes->resourceName);
+	release();
 }
 
 //initialise the renderer component
@@ -25,6 +24,18 @@ void RendererComponent::render(Application2D * appPtr, Vector2 cameraOffset)
 	global.max_ += cameraOffset * -1.0f;
 
 	appPtr->m_renderer2D->drawSprite(textureRes->texture, global.min_.x * appPtr->m_screen.x, global.min_.y * appPtr->m_screen.y, length.x * appPtr->m_screen.x, length.y * appPtr->m_screen.y, 0.0f, 1.0f, 0.0f, 0.0f);
+}
+
+//releases all data held by the component
+void RendererComponent::release()
+{
+	//release the resource
+	if (textureRes != nullptr)
+	{
+		RESOURCE_MAN->releaseResource(textureRes->resourceName);
+	}
+
+	textureRes = nullptr;
 }
 
 //gets the space occupied by the renderer's region

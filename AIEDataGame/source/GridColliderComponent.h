@@ -101,4 +101,15 @@ public:
 	*/
 	LinkedList<GridPair> getNeighbourColliders(AABB otherRegion);
 
+	/*
+	* release
+	*
+	* releases all resources held
+	* by the component
+	*
+	* @returns void
+	*/
+	void release();
+
+
 };

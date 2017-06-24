@@ -36,9 +36,9 @@ public:
 
 	/*
 	* ~Button()
-	* default destructor
+	* destructor, releases the box texture
 	*/
-	~Button() {};
+	~Button();
 	
 	/*
 	* update

@@ -99,4 +99,15 @@ public:
 	* @returns void
 	*/
 	void render(Application2D* appPtr, Vector2 cameraOffset);
+
+	/*
+	* release
+	*
+	* releases all resources held
+	* by the component
+	*
+	* @returns void
+	*/
+	void release();
+
 };

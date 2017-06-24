@@ -1,6 +1,12 @@
 #include "Sprite.h"
 #include "Application2D.h"
 
+//destructor, releases resources
+Sprite::~Sprite()
+{
+	RESOURCE_MAN->releaseResource(boxTexture->resourceName);
+}
+
 //draws the sprite
 void Sprite::draw(Application2D * appPtr)
 {

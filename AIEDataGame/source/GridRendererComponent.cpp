@@ -6,17 +6,7 @@
 //destructor
 GridRendererComponent::~GridRendererComponent()
 {
-	//release the resources used by the renderer
-	RESOURCE_MAN->releaseResource(textRes->resourceName);
-	RESOURCE_MAN->releaseResource(atlasRes->resourceName);
-
-	//delete the rows of the 2D array
-	for (int i = 0; i < sizeY; i++)
-	{
-		delete[] data[i];
-	}
-
-	delete[] data;
+	release();
 }
 
 //initialises the grid
@@ -175,4 +165,31 @@ void GridRendererComponent::render(Application2D* appPtr, Vector2 cameraOffset)
 
 	//reset the UV rect
 	appPtr->m_renderer2D->setUVRect(0, 0, 1, 1);
+}
+
+//releases all data held by the component
+void GridRendererComponent::release()
+{
+	//release the resources used by the renderer
+	if (textRes != nullptr)
+	{
+		RESOURCE_MAN->releaseResource(textRes->resourceName);
+	}
+
+	if (atlasRes != nullptr)
+	{
+		RESOURCE_MAN->releaseResource(atlasRes->resourceName);
+	}
+
+	textRes = nullptr;
+	atlasRes = nullptr;
+
+
+	//delete the rows of the 2D array
+	for (int i = 0; i < sizeY; i++)
+	{
+		delete[] data[i];
+	}
+
+	delete[] data;
 }

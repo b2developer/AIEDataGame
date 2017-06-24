@@ -6,16 +6,7 @@
 //destructor
 GridColliderComponent::~GridColliderComponent()
 {
-	//release the resource
-	RESOURCE_MAN->releaseResource(textRes->resourceName);
-
-	//delete the rows of the 2D array
-	for (int i = 0; i < sizeY; i++)
-	{
-		delete[] data[i];
-	}
-
-	delete[] data;
+	release();
 }
 
 //initialises the grid
@@ -188,4 +179,24 @@ LinkedList<GridPair> GridColliderComponent::getNeighbourColliders(AABB otherRegi
 
 	return gridList;
 
+}
+
+//releases all data held by the component
+void GridColliderComponent::release()
+{
+	//release the resource
+	if (textRes != nullptr)
+	{
+		RESOURCE_MAN->releaseResource(textRes->resourceName);
+	}
+
+	textRes = nullptr;
+
+	//delete the rows of the 2D array
+	for (int i = 0; i < sizeY; i++)
+	{
+		delete[] data[i];
+	}
+
+	delete[] data;
 }

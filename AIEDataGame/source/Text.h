@@ -31,9 +31,9 @@ public:
 
 	/*
 	* ~Text()
-	* default destructor
+	* destructor, releases the font
 	*/
-	~Text() {};
+	~Text();
 
 	/*
 	* update

@@ -295,7 +295,6 @@ public:
 			//set the new root
 			m_tree.setRoot(newNode);
 		}
-		
 
 		if (leftChild->value.active && rightChild->value.active) //both nodes are active
 		{
@@ -352,7 +351,7 @@ public:
 			{
 				currentNode = currentNode->children[1]; //continue down the right branch
 			}
-			else //if the key comes before or belongs in the same position
+			else if (order == -1) //if the key comes before
 			{
 				currentNode = currentNode->children[0]; //continue down the left branch
 			}
@@ -467,17 +466,20 @@ private:
 
 			currentNode->value = node->value;
 			currentNode->parent = prevNode;
-			
+
 			delete node;
 
-			TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
-			TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
+			if (currentNode->children.size == 0)
+			{
+				TreeNode<KeyNode<T>>* inActiveNodeLeft = new TreeNode<KeyNode<T>>();
+				TreeNode<KeyNode<T>>* inActiveNodeRight = new TreeNode<KeyNode<T>>();
 
-			inActiveNodeLeft->value.active = false;
-			inActiveNodeRight->value.active = false;
+				inActiveNodeLeft->value.active = false;
+				inActiveNodeRight->value.active = false;
 
-			m_tree.extend(currentNode, inActiveNodeLeft);
-			m_tree.extend(currentNode, inActiveNodeRight);
+				m_tree.extend(currentNode, inActiveNodeLeft);
+				m_tree.extend(currentNode, inActiveNodeRight);
+			}
 
 		}
 

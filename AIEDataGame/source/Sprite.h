@@ -18,7 +18,6 @@ public:
 	TextureResource* boxTexture = nullptr; //the texture of the sprite to be drawn
 	AABB hitbox = AABB(); //the drawing rectangle of the sprite
 
-
 	/*
 	* Sprite()
 	* default constructor
@@ -27,9 +26,9 @@ public:
 
 	/*
 	* ~Sprite()
-	* default destructor
+	* destructor, releases the box texture
 	*/
-	~Sprite() {};
+	~Sprite();
 
 	/*
 	* update

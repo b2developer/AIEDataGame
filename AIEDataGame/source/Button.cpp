@@ -2,6 +2,12 @@
 #include "Application2D.h"
 #include "CollisionSolver.h"
 
+//destructor, releases resources
+Button::~Button()
+{
+	RESOURCE_MAN->releaseResource(boxTexture->resourceName);
+}
+
 //simulates one frame of the button
 void Button::update(Application2D* appPtr, float deltaTime)
 {

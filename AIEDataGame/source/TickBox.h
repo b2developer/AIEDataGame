@@ -33,9 +33,9 @@ public:
 
 	/*
 	* ~TickBox()
-	* default destructor
+	* destructor, releases the false and true textures
 	*/
-	~TickBox() {};
+	~TickBox();
 
 	/*
 	* update

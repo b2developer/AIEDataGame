@@ -10,6 +10,12 @@ void PlayState::update(Application2D* appPtr, float deltaTime)
 	updateScripts(appPtr, deltaTime);
 	updateColliders(appPtr, deltaTime);
 
+	if (isFinished)
+	{
+		cleanUp();
+		winAct->execute(appPtr);
+	}
+
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 	{
 		pauseAct->execute(appPtr);
@@ -25,6 +31,7 @@ void PlayState::draw(Application2D* appPtr)
 //called when the gamestate becomes the uppermost gamestate in the stack
 void PlayState::onEnter(Application2D* appPtr)
 {
+	isFinished = false;
 	firstFrame = true;
 
 	appPtr->director->builder = appPtr->playerBuilder;
@@ -47,7 +54,6 @@ void PlayState::onEnter(Application2D* appPtr)
 	appPtr->director->builder = appPtr->wallBuilder;
 
 	//instantiate the gameobject
-	/*
 	GameObject* wall = appPtr->director->buildGameObject(appPtr, this);
 	
 	transformList = wall->getComponentsOfType<TransformComponent>();
@@ -62,28 +68,71 @@ void PlayState::onEnter(Application2D* appPtr)
 	colliderList[0]->region = rendererList[0]->region;
 	colliderList[0]->mtvBias = 0.0f;
 
-	*/
+	appPtr->director->builder = appPtr->enemyBuilder;
+
+	//instantiate the gameobject
+	GameObject* enemy1 = appPtr->director->buildGameObject(appPtr, this);
+
+	transformList = enemy1->getComponentsOfType<TransformComponent>();
+	rendererList = enemy1->getComponentsOfType<RendererComponent>();
+	colliderList = enemy1->getComponentsOfType<ColliderComponent>();
+
+	transformList[0]->position = Vector2(1.1f, 0.5f);
+
+	rendererList[0]->textureRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "enemy.png");
+	rendererList[0]->region = AABB(Vector2(-0.02f, -0.02f), Vector2(0.02f, 0.02f));
+
+	colliderList[0]->region = rendererList[0]->region;
+	colliderList[0]->mtvBias = 1.0f;
+
+	//instantiate the gameobject
+	GameObject* enemy2 = appPtr->director->buildGameObject(appPtr, this);
+
+	transformList = enemy2->getComponentsOfType<TransformComponent>();
+	rendererList = enemy2->getComponentsOfType<RendererComponent>();
+	colliderList = enemy2->getComponentsOfType<ColliderComponent>();
+
+	transformList[0]->position = Vector2(1.72f, 0.5f);
+
+	rendererList[0]->textureRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "enemy.png");
+	rendererList[0]->region = AABB(Vector2(-0.02f, -0.04f), Vector2(0.02f, 0.04f));
+
+	colliderList[0]->region = rendererList[0]->region;
+	colliderList[0]->mtvBias = 1.0f;
+
+	appPtr->director->builder = appPtr->flagBuilder;
+
+	//instantiate the gameobject
+	GameObject* flag = appPtr->director->buildGameObject(appPtr, this);
+
+	transformList = flag->getComponentsOfType<TransformComponent>();
+	rendererList = flag->getComponentsOfType<RendererComponent>();
+	colliderList = flag->getComponentsOfType<ColliderComponent>();
+
+	transformList[0]->position = Vector2(2.7f, 0.4f);
+
+	rendererList[0]->textureRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_flag.png");
+	rendererList[0]->region = AABB(Vector2(-0.1f, -0.1f), Vector2(0.1f, 0.1f));
+
+	colliderList[0]->region = rendererList[0]->region;
+	colliderList[0]->mtvBias = 0.0f;
+
 
 	appPtr->director->builder = appPtr->levelBuilder;
 
 	//instantiate the gameobject
 	GameObject* level = appPtr->director->buildGameObject(appPtr, this);
 
-	//----------------- BEGIN SHITTY INITIALISATION -----------------------
 	LinkedList<GridColliderComponent*> gcList = level->getComponentsOfType<GridColliderComponent>();
 
 	gcList[0]->sizeX = 10;
 	gcList[0]->sizeY = 4;
 
 	gcList[0]->mtvBias = 0.0f;
-	gcList[0]->region = AABB(Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f));
+	gcList[0]->region = AABB(Vector2(0.0f, 0.0f), Vector2(0.05f, 0.07f));
 
-	gcList[0]->data = new ColliderType*[4];
-
-	gcList[0]->data[3] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
-	gcList[0]->data[2] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
-	gcList[0]->data[1] = new ColliderType[10]{ (ColliderType)0,  (ColliderType)1,  (ColliderType)1,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0,  (ColliderType)0 };
-	gcList[0]->data[0] = new ColliderType[10]{ (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1,  (ColliderType)3,  (ColliderType)3,  (ColliderType)2,  (ColliderType)1,  (ColliderType)1,  (ColliderType)1 };
+	gcList[0]->textRes = (TextFileResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTFILE, "text\\level1colls.txt");
+	gcList[0]->load();
 
 	LinkedList<GridRendererComponent*> grList = level->getComponentsOfType<GridRendererComponent>();
 
@@ -91,17 +140,12 @@ void PlayState::onEnter(Application2D* appPtr)
 	grList[0]->sizeY = 4;
 
 	grList[0]->singularRegion = AABB(Vector2(0.0f, 0.0f), Vector2(16.0f, 16.0f));
-	grList[0]->renderRegion = AABB(Vector2(0.0f, 0.0f), Vector2(0.1f, 0.1f));
+	grList[0]->renderRegion = AABB(Vector2(0.0f, 0.0f), Vector2(0.05f, 0.07f));
 
 	grList[0]->atlasRes = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "level_atlas.png");
+	grList[0]->textRes = (TextFileResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTFILE, "text\\level1tiles.txt");
 
-	grList[0]->data = new TileType*[4];
-
-	grList[0]->data[1] = new TileType[10]{ (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0 };
-	grList[0]->data[2] = new TileType[10]{ (TileType)0,  (TileType)1,  (TileType)1,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0 };
-	grList[0]->data[3] = new TileType[10]{ (TileType)1,  (TileType)1,  (TileType)1,  (TileType)1,  (TileType)3,  (TileType)3,  (TileType)2,  (TileType)1,  (TileType)1,  (TileType)1 };
-	grList[0]->data[0] = new TileType[10]{ (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0,  (TileType)0 };
-	//----------------- END SHITTY INITIALISATION -----------------------
+	grList[0]->load();
 
 }
 
@@ -277,7 +321,7 @@ void PlayState::updateRenderers(Application2D* appPtr)
 	//iterate through all grid renderers
 	for (; iter != gridRenderers.end(); iter++)
 	{
-		iter.m_node->value->render(appPtr);
+		iter.m_node->value->render(appPtr, cameraOverride);
 	}
 
 	LinkedList<RendererComponent*>::Iterator iter2 = renderers.begin();
@@ -285,7 +329,7 @@ void PlayState::updateRenderers(Application2D* appPtr)
 	//iterate through all renderers
 	for (; iter2 != renderers.end(); iter2++)
 	{
-		iter2.m_node->value->render(appPtr);
+		iter2.m_node->value->render(appPtr, cameraOverride);
 	}
 
 }
@@ -341,6 +385,7 @@ void PlayState::cleanUp()
 	//iterate through all renderers
 	for (; iter4 != renderers.end(); iter4++)
 	{
+		iter4.m_node->value->release();
 		poolPtr->removeObject("renderer", iter4.m_node->value);
 	}
 
@@ -367,5 +412,78 @@ void PlayState::cleanUp()
 	gridRenderers.clear();
 
 	scripts.clear();
+}
+
+//removes all components of a gameobject
+void PlayState::destroy(GameObject * gameObject)
+{
+	//get all components
+	LinkedList<TransformComponent*> gl_transforms = gameObject->getComponentsOfType<TransformComponent>();
+	LinkedList<ColliderComponent*> gl_colliders = gameObject->getComponentsOfType<ColliderComponent>();
+	LinkedList<RendererComponent*> gl_renderers = gameObject->getComponentsOfType<RendererComponent>();
+	LinkedList<ScriptComponent*> gl_scripts = gameObject->getComponentsOfType<ScriptComponent>();
+	LinkedList<GridColliderComponent*> gl_gridColls = gameObject->getComponentsOfType<GridColliderComponent>();
+	LinkedList<GridRendererComponent*> gl_gridRends = gameObject->getComponentsOfType<GridRendererComponent>();
+
+	//get all iterators for component lists
+	LinkedList<TransformComponent*>::Iterator g_transforms = gl_transforms.begin();
+	LinkedList<ColliderComponent*>::Iterator g_colliders = gl_colliders.begin();
+	LinkedList<RendererComponent*>::Iterator g_renderers = gl_renderers.begin();
+	LinkedList<ScriptComponent*>::Iterator g_scripts = gl_scripts.begin();
+	LinkedList<GridColliderComponent*>::Iterator g_gridColls = gl_gridColls.begin();
+	LinkedList<GridRendererComponent*>::Iterator g_gridRends = gl_gridRends.begin();
+
+	//iterate through all transforms
+	for (; g_transforms != nullptr; g_transforms++)
+	{
+		transforms.erase(g_transforms.m_node->value->thisNode);
+		delete g_transforms.m_node->value;
+	}
+
+	//iterate through all colliders
+	for (; g_colliders != nullptr; g_colliders++)
+	{
+		colliders.erase(g_colliders.m_node->value->thisNode);
+		delete g_colliders.m_node->value;
+	}
+
+	//iterate through all renderers
+	for (; g_renderers != nullptr; g_renderers++)
+	{
+		renderers.erase(g_renderers.m_node->value->thisNode);
+		delete g_renderers.m_node->value;
+	}
+
+	//iterate through all scripts
+	for (; g_scripts != nullptr; g_scripts++)
+	{
+		scripts.erase(g_scripts.m_node->value->thisNode);
+		delete g_scripts.m_node->value;
+	}
+
+	//iterate through all grids
+	for (; g_gridColls != nullptr; g_gridColls++)
+	{
+		gridColliders.erase(g_gridColls.m_node->value->thisNode);
+		delete g_gridColls.m_node->value;
+	}
+
+	//iterate through all grids
+	for (; g_gridRends != nullptr; g_gridRends++)
+	{
+		gridRenderers.erase(g_gridRends.m_node->value->thisNode);
+		delete g_gridRends.m_node->value;
+	}
+
+	//erase the gameobject
+	gameObjects.erase(gameObject->thisNode);
+
+	delete gameObject;
+}
+
+//tells the play state to stop
+void PlayState::win(Application2D * appPtr)
+{
+	isFinished = true;
 }
 
