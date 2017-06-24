@@ -19,11 +19,13 @@ void EntityScript::update(Application2D * appPtr, float deltaTime)
 	//iterate through all collisions
 	for (int i = 0; i < (int)collider->collisions.size; i++)
 	{
-		float nDot = -velocity.dot(collider->collisions[i].normal);
+		CollisionTuple coll = collider->collisions[i];
+
+		float nDot = -velocity.dot(coll.normal);
 
 		if (nDot > 0)
 		{
-			velocity += collider->collisions[i].normal * nDot;
+			velocity += coll.normal * nDot;
 		}
 	}
 

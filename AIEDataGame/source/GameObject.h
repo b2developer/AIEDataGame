@@ -2,8 +2,9 @@
 #include "LinkedList.h"
 #include "BaseComponent.h"
 
-//forward declaration
+//forward declaration of the play state and application
 class Application2D;
+class PlayState;
 
 /*
 * class GameObject
@@ -21,6 +22,7 @@ public:
 	LinkedNode<GameObject*>* thisNode = nullptr; //position in the gameObjects array in playState
 
 	TransformComponent* transform = nullptr; //most components need to know about the transform
+	PlayState* playState = nullptr; //pointer to the play state that is updating this play state
 
 	LinkedList<BaseComponent*> components;
 
@@ -58,6 +60,15 @@ public:
 	a
 	*/
 	void update(Application2D* appPtr, float deltaTime);
+
+	/*
+	* destroy
+	*
+	* calls upon the play state updating this gameobject to destroy it
+	*
+	* @returns void
+	*/
+	void destroy();
 
 	TEMPLATE
 	/*

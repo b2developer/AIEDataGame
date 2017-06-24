@@ -34,9 +34,10 @@ public:
 
 	/*
 	* ~BaseComponent()
+	* virtual function
 	* default destructor
 	*/
-	~BaseComponent() {};
+	virtual ~BaseComponent() {};
 
 	/*
 	* initialise

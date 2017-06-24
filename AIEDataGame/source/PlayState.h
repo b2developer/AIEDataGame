@@ -38,6 +38,7 @@ class PlayState : public GameState
 public:
 
 	PushAction* pauseAct; //defined action that pauses the game
+	PushAction* winAct; //defined action that displays the win state
 
 	Pool* poolPtr = nullptr; //pointer to the pool, used to grab and save objects from/to
 
@@ -48,6 +49,8 @@ public:
 	LinkedList<RendererComponent*> renderers = LinkedList<RendererComponent*>(0);
 	LinkedList<GridColliderComponent*> gridColliders = LinkedList<GridColliderComponent*>(0);
 	LinkedList<GridRendererComponent*> gridRenderers = LinkedList<GridRendererComponent*>(0);
+
+	bool isFinished = false;
 
 	/*
 	* PlayState()
@@ -147,4 +150,29 @@ public:
 	* @returns void
 	*/
 	void cleanUp();
+
+	/*
+	* destroy
+	*
+	* removes a gameobject from the game state
+	* deletes all unnecessary components, stores
+	* important components back into the pool that
+	* they came from
+	*
+	* @param GameObject* gameObject - pointer to the gameObject to remove
+	* @returns void
+	*/
+	void destroy(GameObject* gameObject);
+	
+	/*
+	* win
+	*
+	* resets the game
+	* displays the win state
+	*
+	* @param Application2D* appPtr - pointer to the application
+	* @returns void
+	*/
+	void win(Application2D* appPtr);
+	
 };

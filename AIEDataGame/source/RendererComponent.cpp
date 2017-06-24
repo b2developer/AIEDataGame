@@ -1,6 +1,13 @@
 #include "RendererComponent.h"
 #include "Application2D.h"
 
+//destructor
+RendererComponent::~RendererComponent()
+{
+	//release the resource
+	RESOURCE_MAN->releaseResource(textureRes->resourceName);
+}
+
 //initialise the renderer component
 void RendererComponent::initialise()
 {

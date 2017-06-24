@@ -22,9 +22,10 @@ public:
 
 	/*
 	* ~Item()
+	* virtual function
 	* default destructor
 	*/
-	~Item() {};
+	virtual ~Item() {};
 
 	/*
 	* update

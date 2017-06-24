@@ -13,6 +13,8 @@ class Resource
 {
 public:
 
+	char resourceName[MAX_PATH]; //the name that the resource has
+
 	/*
 	* Resource()
 	* default constructor

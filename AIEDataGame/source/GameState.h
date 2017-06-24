@@ -30,9 +30,10 @@ public:
 
 	/*
 	* GameState
+	* virtual function
 	* default destructor
 	*/
-	~GameState() {};
+	virtual ~GameState() {};
 
 	/*
 	* update

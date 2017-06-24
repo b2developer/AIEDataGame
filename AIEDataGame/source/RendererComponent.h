@@ -33,10 +33,9 @@ public:
 
 	/*
 	* ~RendererComponent()
-	* virtual function
-	* default destructor
+	* destructor, releases the texture
 	*/
-	virtual ~RendererComponent() {};
+	~RendererComponent();
 
 	/*
 	* initialise

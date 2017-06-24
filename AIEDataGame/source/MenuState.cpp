@@ -1,6 +1,7 @@
 #include "MenuState.h"
 #include "Application2D.h"
 
+
 //simulates one frame of the menu state
 void MenuState::update(Application2D* appPtr, float deltaTime)
 {

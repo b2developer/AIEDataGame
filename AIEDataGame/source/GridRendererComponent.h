@@ -53,10 +53,9 @@ public:
 
 	/*
 	* ~GridRendererComponent()
-	* virtual function
-	* default destructor
+	* destructor, removes the 2D array
 	*/
-	virtual ~GridRendererComponent() {};
+	~GridRendererComponent();
 
 	/*
 	* initialise
@@ -79,6 +78,18 @@ public:
 	void load();
 
 	/*
+	* charArrayToInt
+	*
+	* converts an array of chars into an array
+	* throws an error if the string was too long
+	* or didn't contain only ascii numerals
+	*
+	* @parar char* cArr - the c-string to create a number from
+	* @returns int - the number made from the c-string
+	*/
+	int charArrayToInt(char* cArr);
+
+	/*
 	* render
 	*
 	* draws the texture to the screen
@@ -88,5 +99,4 @@ public:
 	* @returns void
 	*/
 	void render(Application2D* appPtr, Vector2 cameraOffset);
-
 };

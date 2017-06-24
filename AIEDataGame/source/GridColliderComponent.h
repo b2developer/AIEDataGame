@@ -52,10 +52,9 @@ public:
 
 	/*
 	* ~GridColliderComponent()
-	* virtual function
-	* default destructor
+	* destructor, removes the 2D array
 	*/
-	~GridColliderComponent() {};
+	~GridColliderComponent();
 
 	/*
 	* initialise
@@ -76,6 +75,19 @@ public:
 	* @returns void
 	*/
 	void load();
+
+	/*
+	* charArrayToInt
+	*
+	* converts an array of chars into an array
+	* throws an error if the string was too long
+	* or didn't contain only ascii numerals
+	*
+	* @parar char* cArr - the c-string to create a number from
+	* @returns int - the number made from the c-string
+	*/
+	int charArrayToInt(char* cArr);
+
 
 	/*
 	* getNeighbourColliders

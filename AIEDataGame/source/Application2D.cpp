@@ -10,7 +10,6 @@ Application2D::~Application2D()
 
 }
 
-
 //reserves memory to be used by the application
 bool Application2D::startup()
 {
@@ -35,20 +34,32 @@ bool Application2D::startup()
 	//create director and some builders
 	director = new Director();
 	playerBuilder = new PlayerBuilder();
+	enemyBuilder = new EnemyBuilder();
 	wallBuilder = new WallBuilder();
 	levelBuilder = new LevelBuilder();
+	flagBuilder = new FlagBuilder();
 
 	director->builder = playerBuilder;
 
+	//create all of the gamestates
 	MenuState* splash = new MenuState();
 	MenuState* mainMenu = new MenuState();
 	PlayState* game = new PlayState();
 	MenuState* options = new MenuState();
 	MenuState* pause = new MenuState();
+	MenuState* win = new MenuState();
+
+	//remember pointers to all gamestates
+	gameStateList.pushBack(splash);
+	gameStateList.pushBack(mainMenu);
+	gameStateList.pushBack(game);
+	gameStateList.pushBack(options);
+	gameStateList.pushBack(pause);
+	gameStateList.pushBack(win);
 
 	game->poolPtr = m_pool;
 
-	//main menu items
+	//menu items
 	{
 		//pop actions
 		PopAction* singlePopAct = new PopAction();
@@ -56,6 +67,9 @@ bool Application2D::startup()
 
 		PopAction* doublePopAct = new PopAction();
 		doublePopAct->layers = 2;
+
+		actions.pushBack(singlePopAct);
+		actions.pushBack(doublePopAct);
 
 		//push actions
 		PushAction* mmPushAct = new PushAction();
@@ -70,43 +84,60 @@ bool Application2D::startup()
 		PushAction* paPushAct = new PushAction();
 		paPushAct->pushed = pause;
 
+		PushAction* winAct = new PushAction();
+		winAct->pushed = win;
+
+		actions.pushBack(mmPushAct);
+		actions.pushBack(gaPushAct);
+		actions.pushBack(opPushAct);
+		actions.pushBack(paPushAct);
+		actions.pushBack(winAct);
+
 		//push buttons
 		Button* gaPush = new Button();
 		gaPush->action = gaPushAct;
-		gaPush->hitbox.min_ = Vector2(0.4f, 0.4f);
-		gaPush->hitbox.max_ = Vector2(0.6f, 0.6f);
-		gaPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+		gaPush->hitbox.min_ = Vector2(0.4f, 0.65f);
+		gaPush->hitbox.max_ = Vector2(0.6f, 0.85f);
+		gaPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "play.png");
 
 		Button* opPush = new Button();
 		opPush->action = opPushAct;
 		opPush->hitbox.min_ = Vector2(0.4f, 0.4f);
 		opPush->hitbox.max_ = Vector2(0.6f, 0.6f);
-		opPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
-
-		Button* opPush2 = new Button();
-		opPush2->action = opPushAct;
-		opPush2->hitbox.min_ = Vector2(0.7f, 0.4f);
-		opPush2->hitbox.max_ = Vector2(0.9f, 0.6f);
-		opPush2->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+		opPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "options.png");
 
 		Button* paPush = new Button();
 		paPush->action = paPushAct;
-		paPush->hitbox.min_ = Vector2(0.4f, 0.4f);
-		paPush->hitbox.max_ = Vector2(0.6f, 0.6f);
-		paPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "red_square.png");
+		paPush->hitbox.min_ = Vector2(0.4f, 0.15f);
+		paPush->hitbox.max_ = Vector2(0.6f, 0.35f);
+		paPush->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "resume.png");
+
+		elements.pushBack(gaPush);
+		elements.pushBack(opPush);
+		elements.pushBack(paPush);
 
 		//pop buttons
 		Button* singlePop = new Button();
 		singlePop->action = singlePopAct;
-		singlePop->hitbox.min_ = Vector2(0.4f, 0.7f);
-		singlePop->hitbox.max_ = Vector2(0.6f, 0.9f);
-		singlePop->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
+		singlePop->hitbox.min_ = Vector2(0.4f, 0.15f);
+		singlePop->hitbox.max_ = Vector2(0.6f, 0.35f);
+		singlePop->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "exit.png");
+
+		Button* singlePop2 = new Button();
+		singlePop2->action = singlePopAct;
+		singlePop2->hitbox.min_ = Vector2(0.4f, 0.65f);
+		singlePop2->hitbox.max_ = Vector2(0.6f, 0.85f);
+		singlePop2->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "resume.png");
 
 		Button* doublePop = new Button();
 		doublePop->action = doublePopAct;
-		doublePop->hitbox.min_ = Vector2(0.7f, 0.7f);
-		doublePop->hitbox.max_ = Vector2(0.9f, 0.9f);
-		doublePop->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "blue_square.png");
+		doublePop->hitbox.min_ = Vector2(0.4f, 0.15f);
+		doublePop->hitbox.max_ = Vector2(0.6f, 0.35f);
+		doublePop->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "exit.png");
+
+		elements.pushBack(singlePop);
+		elements.pushBack(singlePop2);
+		elements.pushBack(doublePop);
 
 		//timer
 		Timer* splashTimer = new Timer();
@@ -114,6 +145,8 @@ bool Application2D::startup()
 		splashTimer->currentTime = splashTimer->maxTime;
 		splashTimer->reactions.pushBack(singlePopAct);
 		splashTimer->reactions.pushBack(mmPushAct);
+
+		elements.pushBack(splashTimer);
 
 		//text
 		Text* mainMenuText = new Text();
@@ -137,7 +170,7 @@ bool Application2D::startup()
 		Text* pauseText = new Text();
 		strcpy_s(pauseText->message, "Pause");
 		pauseText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
-		pauseText->origin = Vector2(0.05f, 0.6f);
+		pauseText->origin = Vector2(0.05f, 0.8f);
 		pauseText->scale = Vector2(1.0f, 1.0f);
 
 		Text* splashText = new Text();
@@ -146,6 +179,20 @@ bool Application2D::startup()
 		splashText->origin = Vector2(0.05f, 0.8f);
 		splashText->scale = Vector2(1.0f, 1.0f);
 
+		Text* winText = new Text();
+		strcpy_s(winText->message, "Win!");
+		winText->font = (FontResource*)RESOURCE_MAN->requestResource(ResourceType::FONT, "font/consolas.ttf");
+		winText->origin = Vector2(0.45f, 0.6f);
+		winText->scale = Vector2(1.0f, 1.0f);
+
+		elements.pushBack(mainMenuText);
+		elements.pushBack(gameText);
+		elements.pushBack(optionsText);
+		elements.pushBack(pauseText);
+		elements.pushBack(splashText);
+		elements.pushBack(winText);
+
+		//additional items
 		TickBox* tickbox = new TickBox();
 		tickbox->hitbox.min_ = Vector2(0.47f, 0.53f);
 		tickbox->hitbox.max_ = Vector2(0.53f, 0.59f);
@@ -157,17 +204,20 @@ bool Application2D::startup()
 		sprite->hitbox.max_ = Vector2(0.43f, 0.59f);
 		sprite->boxTexture = (TextureResource*)RESOURCE_MAN->requestResource(ResourceType::TEXTURE, "green_square.png");
 
+		elements.pushBack(tickbox);
+		elements.pushBack(sprite);
+
 		splash->items.pushBack(splashTimer);
 		splash->items.pushBack(splashText);
 
 		mainMenu->items.pushBack(gaPush);
 		mainMenu->items.pushBack(singlePop);
 		mainMenu->items.pushBack(mainMenuText);
-		mainMenu->items.pushBack(opPush2);
+		mainMenu->items.pushBack(opPush);
 
 		game->pauseAct = paPushAct;
 
-		pause->items.pushBack(singlePop);
+		pause->items.pushBack(singlePop2);
 		pause->items.pushBack(doublePop);
 		pause->items.pushBack(opPush);
 		pause->items.pushBack(pauseText);
@@ -178,6 +228,12 @@ bool Application2D::startup()
 		options->items.pushBack(optionsText);
 		options->items.pushBack(tickbox);
 		options->items.pushBack(sprite);
+
+		win->items.pushBack(doublePop);
+		win->items.pushBack(winText);
+
+		game->winAct = winAct;
+
 	}
 
 	gameStateStack.pushBack(splash);
@@ -194,6 +250,34 @@ void Application2D::shutdown()
 
 	delete director;
 	delete playerBuilder;
+	delete enemyBuilder;
+	delete wallBuilder;
+	delete levelBuilder;
+	delete flagBuilder;
+
+	LinkedList<GameState*>::Iterator iter = gameStateList.begin();
+
+	//iterate through all gamestates and delete them
+	for (; iter != gameStateList.end(); iter++)
+	{
+		delete iter.m_node->value;
+	}
+
+	LinkedList<Item*>::Iterator iter2 = elements.begin();
+
+	//iterate through all items and delete them
+	for (; iter2 != elements.end(); iter2++)
+	{
+		delete iter2.m_node->value;
+	}
+
+	LinkedList<Action*>::Iterator iter3 = actions.begin();
+
+	//iterate through all actions and delete them
+	for (; iter3 != actions.end(); iter3++)
+	{
+		delete iter3.m_node->value;
+	}
 }
 
 //simulates one frame

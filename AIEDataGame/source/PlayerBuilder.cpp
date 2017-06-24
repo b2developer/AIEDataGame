@@ -9,6 +9,7 @@ void PlayerBuilder::setObject(Application2D * appPtr, PlayState * playState, Gam
 {
 	playState->gameObjects.pushBack(gameObject);
 	gameObject->thisNode = playState->gameObjects.endNode(); //set the linked node
+	gameObject->playState = playState;
 }
 
 //sets transform component variables
@@ -30,9 +31,9 @@ void PlayerBuilder::setScript(Application2D * appPtr, PlayState * playState, Gam
 	((PlayerScript*)entity)->camera = &playState->cameraOverride; //give the player a pointer to the vector that controls the camera
 
 	//give the player the statistics of maximum speed, acceleration and friction
-	((PlayerScript*)entity)->run = MovementState(2.0f, 0.0f, 0.92f); //give the player run statistics
-	((PlayerScript*)entity)->air = MovementState(1.0f, 0.0f, 0.95f); //give the player air statistics
-	((PlayerScript*)entity)->jumpPower = 0.7f; //give the player the jump power
+	((PlayerScript*)entity)->run = MovementState(3.0f, 0.0f, 0.01f); //give the player run statistics
+	((PlayerScript*)entity)->air = MovementState(1.5f, 0.0f, 0.05f); //give the player air statistics
+	((PlayerScript*)entity)->jumpPower = 0.9f; //give the player the jump power
 
 
 	gameObject->components.pushBack(entity); //add the polymoprhic script component to the gameobject

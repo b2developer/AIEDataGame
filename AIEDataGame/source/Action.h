@@ -23,9 +23,10 @@ public:
 
 	/*
 	* ~Action()
+	* virtual function
 	* default destructor
 	*/
-	~Action() {};
+	virtual ~Action() {};
 
 	/*
 	* execute

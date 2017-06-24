@@ -25,3 +25,9 @@ void GameObject::update(Application2D* appPtr, float deltaTime)
 		iter.m_node->value->update(appPtr, deltaTime);
 	}
 }
+
+//tells the play state to destroy this gameobject
+void GameObject::destroy()
+{
+	playState->destroy(this);
+}

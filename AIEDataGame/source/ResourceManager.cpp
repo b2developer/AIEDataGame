@@ -73,6 +73,8 @@ Resource * ResourceManager::requestResource(ResourceType resourceType, char file
 		resourcePtr = loadedContainer.searchFor(fileName);
 	}
 
+	//copy the resource name
+	strcpy_s((*resourcePtr)->resource->resourceName, fileName);
 	(*resourcePtr)->resourceCount++;
 	
 	return (*resourcePtr)->resource;

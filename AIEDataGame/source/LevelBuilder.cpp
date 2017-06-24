@@ -9,6 +9,7 @@ void LevelBuilder::setObject(Application2D * appPtr, PlayState * playState, Game
 {
 	playState->gameObjects.pushBack(gameObject);
 	gameObject->thisNode = playState->gameObjects.endNode(); //set the linked node
+	gameObject->playState = playState;
 }
 
 //sets transform component variables

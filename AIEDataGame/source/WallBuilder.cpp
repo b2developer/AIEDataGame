@@ -8,6 +8,7 @@ void WallBuilder::setObject(Application2D * appPtr, PlayState * playState, GameO
 {
 	playState->gameObjects.pushBack(gameObject);
 	gameObject->thisNode = playState->gameObjects.endNode(); //set the linked node
+	gameObject->playState = playState;
 }
 
 //sets transform component variables
@@ -24,7 +25,7 @@ void WallBuilder::setTransform(Application2D * appPtr, PlayState * playState, Ga
 //sets script component variables
 void WallBuilder::setScript(Application2D * appPtr, PlayState * playState, GameObject * gameObject)
 {
-
+	
 }
 
 //sets collider component variables
