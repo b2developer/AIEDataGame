@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AIEMathsLibrary", "AIEMathsLibrary\AIEMathsLibrary.vcxproj", "{7AC66BA4-5A65-4CD0-8849-A78740E7CFAA}"
 EndProject
@@ -11,7 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AIEDataGame", "AIEDataGame\
 	ProjectSection(ProjectDependencies) = postProject
 		{AF59BB0B-E059-4773-83DC-728A949647DA} = {AF59BB0B-E059-4773-83DC-728A949647DA}
 		{7AC66BA4-5A65-4CD0-8849-A78740E7CFAA} = {7AC66BA4-5A65-4CD0-8849-A78740E7CFAA}
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770} = {743D14C5-FB5C-4D26-8E90-CE068A46D770}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTest.vcxproj", "{743D14C5-FB5C-4D26-8E90-CE068A46D770}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +47,14 @@ Global
 		{44D1DE9B-55D4-4E04-A3D8-4531FF0B0352}.Release|x64.Build.0 = Release|x64
 		{44D1DE9B-55D4-4E04-A3D8-4531FF0B0352}.Release|x86.ActiveCfg = Release|Win32
 		{44D1DE9B-55D4-4E04-A3D8-4531FF0B0352}.Release|x86.Build.0 = Release|Win32
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Debug|x64.ActiveCfg = Debug|x64
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Debug|x64.Build.0 = Debug|x64
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Debug|x86.ActiveCfg = Debug|Win32
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Debug|x86.Build.0 = Debug|Win32
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Release|x64.ActiveCfg = Release|x64
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Release|x64.Build.0 = Release|x64
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Release|x86.ActiveCfg = Release|Win32
+		{743D14C5-FB5C-4D26-8E90-CE068A46D770}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
